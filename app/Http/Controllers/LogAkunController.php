@@ -3,62 +3,124 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\ProfileUsers;
+use App\Models\Timeline;
+use File;
+use Alert;
+use Illuminate\Support\Facades\Session;
 
 class LogAkunController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    //
+    public function __construct()
     {
-        //
+        $this->middleware(function($request,$next){
+            if (session('success')) {
+                Session::success(session('success'));
+            }
+
+            if (session('error')) {
+                Session::error(session('error'));
+            }
+            
+            if (session('warning')) {
+                Session::warning(session('warning'));
+            }
+            return $next($request);
+        });
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    //profil
+    public function dataprofil(){
+        return view ('profil');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    //
+    public function editprofil(Request $a){
+            $message = [
+                'nama.required' => 'Nama tidak boleh kosong',
+                'tempat.required' => 'Tempat lahir tidak boleh kosong',
+                'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
+                'jk.required' => 'Jenis Kelamin harus dipilih',
+                'hp.required' => 'Family card cannot be empty',
+                'alamat.required' => 'School name must be filled',
+            ];
+
+            $cekValidasi = $a->validate([
+                'nama' => 'required',
+                'tempat' => 'required',
+                'tanggal' => 'required',
+                'jk' => 'required',
+                'hp' => 'required',
+                'alamat' => 'required',
+            ], $message);
+
+            $file = $a->file('foto');
+            if(file_exists($file)){
+                $nama_file = time() . "-" . $file->getClientOriginalName();
+                $namaFolder = 'foto profil';
+                $file->move($namaFolder,$nama_file);
+                $pathFoto = $namaFolder."/".$nama_file;
+            } else {
+                $pathFoto = $a->pathFoto;
+            }
+
+            ProfileUsers::where("user_id", Auth::user()->id)->update([
+                'nama' => $a->nama,
+                'foto' => $pathFoto,
+                'tempat_lahir' => $a->tempat,
+                'tanggal_lahir' => $a->tanggal,
+                'gender' => $a->jk,
+                'no_hp' => $a->hp,
+                'alamat' => $a->alamat,
+                'instagram' => $a->ig
+            ]);
+            User::where("id", Auth::user()->id)->update([
+                'name' => $a->nama
+            ]);
+            Timeline::create([
+                'user_id' => Auth::user()->id,
+                'status' => 'Memperbaharui Profile Akun',
+                'pesan' => Auth::user()->id.'Memperbaharui Profile Akunnya',
+                'tgl_update' => now(),
+                'created_at' => now()
+            ]);
+            return redirect('/profile')->with('success', 'Profil Akun Terubah!');
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    public function editakun(Request $a){
+        $dataUser = ProfileUsers::all();
+        $message = [
+            'password.required' => 'Password tidak boleh kosong',
+            'passwordbaru.required' => 'Password baru tidak boleh kosong',
+            'passwordbaru2.required' => 'Ulangi password baru harus sama dan tidak boleh kosong',
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $cekValidasi = $a->validate([
+            'password' => 'required',
+            'passwordbaru' => 'required|min:6|max:255',
+            'passwordbaru2' => 'required|min:6|max:255'
+        ], $message);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (Hash::check($a->password,  Auth::user()->password)) {
+            $id = Auth::user()->id;
+            User::where("id", $id)->update([
+                'password' => bcrypt($a->passwordbaru),
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        }
+        Timeline::create([
+            'user_id' => Auth::user()->id,
+            'status' => 'Memperbaharui Kata Sandi',
+            'pesan' => Auth::user()->id.'Memperbaharui Kata Sandi Akunnya',
+            'tgl_update' => now(),
+            'created_at' => now()
+        ]);
+        return redirect('/profile')->with('success', 'Kata Sandi Akun Terubah!');
     }
 }

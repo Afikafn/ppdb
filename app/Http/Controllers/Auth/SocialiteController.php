@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProfileUser;
 use App\Models\SocialAccount;
 use App\Models\User;
 use App\Models\Timeline;
@@ -40,7 +41,12 @@ class SocialiteController extends Controller
 
         $authUser = $this->findOrCreateUser($user, $provider);
 
-        Auth()->login($authUser, true);
+        //Auth()->login($authUser, true);
+        // Get an instance of the guard
+        $guard = auth()->guard();
+
+        // Log in the user using the guard
+        $guard->login($authUser, true);
 
         return redirect()->route('dashboard');
 
@@ -74,7 +80,7 @@ class SocialiteController extends Controller
                     'created_at' => now()
                 ]);
                 $usersid  = User::orderBy('id', 'DESC')->first();
-                ProfileUsers::create([
+                ProfileUser::create([
                     'user_id' => $usersid->id,
                     'nama' => $socialUser->name,
                     'email' => $socialUser->email,

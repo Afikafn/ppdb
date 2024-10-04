@@ -25,8 +25,8 @@
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form method="POST" action="/login" class="sign-in-form">
-                    {{ csrf_field() }}
+                <form method="POST" action="{{ route('login') }}" class="sign-in-form">
+                    @csrf
 
                     @if (session()->has('loginError'))
                         <div class="alert alert-danger alert-dismissible fade show">
