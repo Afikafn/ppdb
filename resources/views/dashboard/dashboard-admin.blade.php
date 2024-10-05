@@ -100,9 +100,9 @@
                                             $no = 1;
                                         @endphp
                                         <div id="columnChart">
-                                            @foreach ($jmlpendaftarprodi as $x)
-                                                <span id="prodi{{ $no }}" style="color:transparent"
-                                                    aria-disabled>{{ $x->jmldaftarprodi }}</span>
+                                            @foreach ($jmlpendaftarjurusan as $x)
+                                                <span id="jurusan{{ $no }}" style="color:transparent"
+                                                    aria-disabled>{{ $x->jmldaftarjurusan}}</span>
                                                 @php
                                                     $no++;
                                                 @endphp
@@ -164,20 +164,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-sm-6">
-                                <div class="card">
-                                    <div class="card-body d-flex px-4  justify-content-between">
-                                        <div>
-                                            <div class="">
-                                                <p style="margin: 0%"><b>Rp</b></p>
-                                                <h5 class="fs-32 font-w700">{{ number_format($jmlbayar * 150000, 0, 0, '.') }}</h5>
-                                                <span class="fs-18 font-w500 d-block">Jumlah Pembayaran</span>
-                                            </div>
-                                        </div>
-                                        <div id="NewCustomers1"></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -194,7 +180,8 @@
                                             <li> @php
                                                 $no = 1;
                                             @endphp
-                                                @foreach ($viewDataUser as $x)
+                                                @isset($viewdataUser)
+                                                @foreach ($viewdataUser as $x)
                                                     @if ($x->user_id == $item->user_id && $no == 1)
                                                         <div class="timeline-badge primary"></div>
                                                         <a class="timeline-panel text-muted" href="#">
@@ -218,6 +205,7 @@
                                                         $no++;
                                                     @endphp
                                                 @endforeach
+                                                @endisset
                                             </li>
                                         @endforeach
                                     </ul>

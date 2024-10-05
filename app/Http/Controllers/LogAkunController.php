@@ -11,6 +11,7 @@ use App\Models\ProfileUsers;
 use App\Models\Timeline;
 use File;
 use Alert;
+use App\Models\ProfileUser;
 use Illuminate\Support\Facades\Session;
 
 class LogAkunController extends Controller
@@ -69,7 +70,7 @@ class LogAkunController extends Controller
                 $pathFoto = $a->pathFoto;
             }
 
-            ProfileUsers::where("user_id", Auth::user()->id)->update([
+            ProfileUser::where("user_id", Auth::user()->id)->update([
                 'nama' => $a->nama,
                 'foto' => $pathFoto,
                 'tempat_lahir' => $a->tempat,
@@ -94,7 +95,7 @@ class LogAkunController extends Controller
     }
 
     public function editakun(Request $a){
-        $dataUser = ProfileUsers::all();
+        $dataUser = ProfileUser::all();
         $message = [
             'password.required' => 'Password tidak boleh kosong',
             'passwordbaru.required' => 'Password baru tidak boleh kosong',

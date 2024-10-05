@@ -41,7 +41,7 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
+
                     </ul>
                 </li>
                 <li><a href="{{route('data-pengumuman')}}" aria-expanded="false">

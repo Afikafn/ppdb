@@ -46,7 +46,7 @@ class PendaftaranController extends Controller
     public function datapendaftaran(){
         $dataUser = ProfileUser::all();
         $data = Pendaftaran::all();
-        return view ('pendaftaran.data-pendaftaran-admin',['viewDataUser' => $dataUser,'viewData' => $data]);
+        return view ('pendaftaran.data-pendaftaran-admin',['viewDataUser' => $dataUser,'viewData' => $data], compact('viewdataUser'));
     }
 
     public function inputpendaftaran(){

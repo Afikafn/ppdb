@@ -59,7 +59,13 @@ return new class extends Migration
             //     ->on('villages')
             //     ->onUpdate('cascade')->onDelete('cascade');
 
+
             //data pendaftaran
+            $table->unsignedBigInteger('gelombang')->nullable();
+            $table->foreign('gelombang')
+                ->references('id')
+                ->on('jadwal_kegiatan')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->string('tahun_masuk');
             $table->unsignedBigInteger('pil1')->nullable();
             $table->foreign('pil1')
@@ -79,9 +85,12 @@ return new class extends Migration
             $table->string('pekerjaan_ibu')->nullable();
             $table->string('pendidikan_ayah')->nullable();
             $table->string('pendidikan_ibu')->nullable();
+            $table->string('nohp_ayah')->nullable();
+            $table->string('nohp_ibu')->nullable();
             $table->string('penghasilan_ayah')->nullable();
             $table->string('penghasilan_ibu')->nullable();
-            $table->string('nohp_ortu')->nullable();
+
+            $table->string('berkas_ortu');//kk akte ijazah raport penghasilan
 
 
             //data nilai dan sekolah

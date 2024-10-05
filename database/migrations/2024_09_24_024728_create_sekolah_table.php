@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('sekolah', function (Blueprint $table) {
             $table->id();
-            $table->string('NPSN')->unique();
+            $table->string('npsn')->unique();
             $table->string('nama_sekolah');
             $table->string('alamat');
             $table->string('kota');
-            $table->string('provinsi');
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMKADA 
 @endsection
 
 @section('header')

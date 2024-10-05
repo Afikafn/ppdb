@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProfileUser;
+use App\Models\User;
 use App\Models\ProfileUsers;
 use App\Models\Timeline;
-use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Alert;
+use App\Models\ProfileUser;
 
-class RegisterController extends Controller
+class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
@@ -38,14 +40,8 @@ class RegisterController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => [
-                'required',
-                'confirmed',
-                'min:8', // Minimum length of 6 characters
-                'max:255', // Maximum length of 255 characters
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,255}$/', // Password format
-            ],
-            
+            //'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed'],
         ]);
 
         $user = User::create([
@@ -73,7 +69,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home')->with('success', 'Data Tersimpan!');
+        return redirect(RouteServiceProvider::HOME)->with('success', 'Data Tersimpan!');
     }
 
     public function insertRegis(Request $a){
@@ -109,3 +105,4 @@ class RegisterController extends Controller
     }
     }
 }
+

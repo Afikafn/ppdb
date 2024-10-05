@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_kegiatan')->unique();
             $table->string('nama_kegiatan');
+            $table->string('jenis_kegiatan');
             $table->date('tgl_mulai');
             $table->date('tgl_akhir');
             $table->timestamps();
