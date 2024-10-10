@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" style="color: var(--primary)"><a href="dashboard"
                 style="color: var(--primary)">Beranda</a></li>
-        <li class="breadcrumb-item"><a href="javascript:void(0)">PMB PEI</a></li>
+        <li class="breadcrumb-item"><a href="javascript:void(0)">PPDB SMAKDA</a></li>
     </ol>
 </div>
 <div class="row">
@@ -90,15 +90,14 @@
 </div>
 </div>
 <div class="row">
-    @foreach ($prodi as $x)
+    @foreach ($jurusan as $x)
         <div class="col-xl-3 col-lg-6 col-sm-6" style="padding: 0px">
             <div class="card" style="border-radius: 0%;">
                     <div class="new-arrival-product">
                         <div class="new-arrivals-img-contnent">
-                            <img class="img-fluid" src="{{ asset($x->foto_prodi) }}" alt="">
+                            <img class="img-fluid" src="{{ asset($x->foto_jurusan) }}" alt="">
                             <div class="carousel-caption d-none d-md-block">
-                                <a href="ecom-product-detail.html"><h4 style="color: whitesmoke">{{$x->nama_prodi}}</h4></a>
-                                <p>{{$x->jenjang_prodi}}</p>
+                                <a href="ecom-product-detail.html"><h4 style="color: whitesmoke">{{$x->nama_jurusan}}</h4></a>
                             </div>
                         </div>
                     </div>
@@ -199,14 +198,11 @@
                                         <h3>Ketentuan Umum</h3>
                                         <div class="custom-tab-1">
                                             <ul class="nav nav-tabs">
-                                                <li class="nav-item"><a href="#jpk" data-bs-toggle="tab"
-                                                        class="nav-link active show">Jalur Prestasi Khusus</a>
+                                                <li class="nav-item"><a href="#prestasi" data-bs-toggle="tab"
+                                                        class="nav-link active show">Jalur Prestasi</a>
                                                 </li>
-                                                <li class="nav-item"><a href="#reguler" data-bs-toggle="tab"
-                                                        class="nav-link">Jalur Reguler</a>
-                                                </li>
-                                                <li class="nav-item"><a href="#karyawan" data-bs-toggle="tab"
-                                                    class="nav-link">Jalur Karyawan</a>
+                                                <li class="nav-item"><a href="#afirmasi" data-bs-toggle="tab"
+                                                        class="nav-link">Jalur Afirmasi</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
@@ -215,28 +211,16 @@
                                                         <br>
                                                         <h4 class="text-primary mb-4">Persyaratan</h4>
                                                         <ul class="list-inline">
-                                                            <li class="list-inline-item">Siswa kelas XII SMA/SMK/MA/Sederajat lulus pada tahun berjalan.</li>
-                                                            <li class="list-inline-item">Mengisi formulir pendaftaran.</li>
-                                                            <li class="list-inline-item">Melampirkan Surat Penghasilan/Slip Gaji Orang Tua.</li>
+                                                            <li class="list-inline-item">- Siswa kelas XII SMA/SMK/MA/Sederajat lulus pada tahun berjalan.</li>
+                                                            <li class="list-inline-item">- Mengisi formulir pendaftaran.</li>
+                                                            <li class="list-inline-item">- Melampirkan Surat Penghasilan/Slip Gaji Orang Tua.</li>
                                                             <li class="list-inline-item">Sehat jasmani dan rohani serta tidak buta warna dilengkapi dengan Surat Keterangan Sehat.</li>
                                                             <li class="list-inline-item">Melampirkan pasfoto 3×4 dan 4×6 (@ 1 lembar)</li>
                                                             <li class="list-inline-item">Melampirkan fotokopi dokumen (Rapor, Akta Kelahiran, Sertifikat Prestasi <small>(jika ada)</small> )</li>
                                                         </ul>        
                                                     </div>
                                                 </div>
-                                                <div id="reguler" class="tab-pane fade">
-                                                    <br>
-                                                        <h4 class="text-primary mb-4">Persyaratan</h4>
-                                                        <ul class="list-inline">
-                                                            <li class="list-inline-item">Siswa kelas XII SMA/SMK/MA/Sederajat lulus pada tahun berjalan.</li>
-                                                            <li class="list-inline-item">Mengisi formulir pendaftaran.</li>
-                                                            <li class="list-inline-item">Melampirkan Surat Penghasilan/Slip Gaji Orang Tua.</li>
-                                                            <li class="list-inline-item">Sehat jasmani dan rohani serta tidak buta warna dilengkapi dengan Surat Keterangan Sehat.</li>
-                                                            <li class="list-inline-item">Melampirkan pasfoto 3×4 dan 4×6 (@ 1 lembar)</li>
-                                                            <li class="list-inline-item">Melampirkan fotokopi dokumen (Rapor, Akta Kelahiran, Sertifikat Prestasi <small>(jika ada)</small> )</li>
-                                                        </ul>    
-                                                </div>
-                                                <div id="karyawan" class="tab-pane fade">
+                                                <div id="afirmasi" class="tab-pane fade">
                                                     <br>
                                                         <h4 class="text-primary mb-4">Persyaratan</h4>
                                                         <ul class="list-inline">

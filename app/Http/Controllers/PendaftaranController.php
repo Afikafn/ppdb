@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Hash;
 //Use Illuminate\Support\Carbon;
 use File;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,17 +28,17 @@ class PendaftaranController extends Controller
     //
     public function __construct()
     {
-        $this->middleware(function($request,$next){
-            if (session('success')) {
-                Session::success(session('success'));
+        $this->middleware(function($request, $next) {
+            if ($request->session()->has('success')) {
+                $request->session()->flash('success', $request->session()->get('success'));
             }
 
-            if (session('error')) {
-                Session::error(session('error'));
+            if ($request->session()->has('error')) {
+                $request->session()->flash('error', $request->session()->get('error'));
             }
-            
-            if (session('warning')) {
-                Session::warning(session('warning'));
+
+            if ($request->session()->has('warning')) {
+                $request->session()->flash('warning', $request->session()->get('warning'));
             }
             return $next($request);
         });
@@ -46,15 +48,15 @@ class PendaftaranController extends Controller
     public function datapendaftaran(){
         $dataUser = ProfileUser::all();
         $data = Pendaftaran::all();
-        return view ('pendaftaran.data-pendaftaran-admin',['viewDataUser' => $dataUser,'viewData' => $data], compact('viewdataUser'));
+        return view ('pendaftaran.data-pendaftaran-admin',['viewdataUser' => $dataUser,'viewData' => $data]);
     }
 
     public function inputpendaftaran(){
-        $dataprod = Jurusan::all();
+        $datajurusan = Jurusan::all();
         $datenow = date('Y-m-d');
         $dataJadwal = JadwalKegiatan::where("tgl_mulai","<=",$datenow)->where("tgl_akhir",">",$datenow)->where("jenis_kegiatan","Pendaftaran")->get();
         $dataSekolah = Sekolah::all();
-        return view ('pendaftaran.data-pendaftaran-input-admin',['viewDataJadwal' => $dataJadwal,'viewSekolah' => $dataSekolah,'viewProdi' => $dataprod]);
+        return view ('pendaftaran.data-pendaftaran-input-admin',['viewDataJadwal' => $dataJadwal,'viewSekolah' => $dataSekolah,'viewjurusan' => $datajurusan]);
     }
 
     public function simpanpendaftaran(Request $a)
@@ -74,8 +76,8 @@ class PendaftaranController extends Controller
         //     'email.required' => 'Email must be filled',
         //     'nohp.required' => 'Mobile phone must be filled',
         //     'gelombang.required' => 'Batch must be filled',
-        //     'pil1.required' => 'Prodi choice must be filled',
-        //     'pil2.required' => 'Prodi choice must be filled',
+        //     'pil1.required' => 'jurusan choice must be filled',
+        //     'pil2.required' => 'jurusan choice must be filled',
         //     'ayah.required' => 'Father`s name must be filled',
         //     'ibu.required' => 'Mother`s name must be filled',
         //     'pekerjaanayah.required' => 'Father`s occupation must be filled',
@@ -305,7 +307,7 @@ class PendaftaranController extends Controller
         $datenow = date('Y-m-d');
         $dataJadwal = JadwalKegiatan::where("tgl_mulai","<=","$datenow")->where("tgl_akhir",">","$datenow")->where("jenis_kegiatan","Pendaftaran")->get();
         $data = Pendaftaran::where("id_pendaftaran",$id_pendaftaran)->first();
-        return view('pendaftaran.data-pendaftaran-edit-admin', ['viewDataJadwal' => $dataJadwal,'viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewProdi' => $dataprod]);
+        return view('pendaftaran.data-pendaftaran-edit-admin', ['viewDataJadwal' => $dataJadwal,'viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewjurusan' => $dataprod]);
     }
 
     public function updatependaftaran(Request $a, $id_pendaftaran){
@@ -324,8 +326,8 @@ class PendaftaranController extends Controller
         //     'email.required' => 'Email must be filled',
         //     'nohp.required' => 'Mobile phone must be filled',
         //     'gelombang.required' => 'Batch must be filled',
-        //     'pil1.required' => 'Prodi choice must be filled',
-        //     'pil2.required' => 'Prodi choice must be filled',
+        //     'pil1.required' => 'jurusan choice must be filled',
+        //     'pil2.required' => 'jurusan choice must be filled',
         //     'ayah.required' => 'Father`s name must be filled',
         //     'ibu.required' => 'Mother`s name must be filled',
         //     'pekerjaanayah.required' => 'Father`s occupation must be filled',
@@ -468,21 +470,31 @@ class PendaftaranController extends Controller
         }
     }
 
-    public function hapuspendaftaran($id_pendaftaran){
-        //$dataUser = ProfileUsers::all();
-        try{
+public function hapuspendaftaran($id_pendaftaran){
+    try{
+        DB::transaction(function () use ($id_pendaftaran) {
             $data = Pendaftaran::find($id_pendaftaran);
-            Storage::delete($data->pas_foto);
-            Storage::delete($data->berkas_ortu);
-            Storage::delete($data->berkas_siswa);
-            Storage::delete($data->prestasi);
+            
+            // Check if files exist before deleting
+            if (Storage::disk('public')->exists($data->pas_foto)) {
+                Log::debug("File exists: " . $data->pas_foto);
+                Storage::disk('public')->delete($data->pas_foto);
+                Log::debug("File deleted: " . $data->pas_foto);
+            } else {
+                Log::debug("File does not exist: " . $data->pas_foto);
+            }
+            
+            // Repeat the same process for the other files
             
             $data->delete();
-            return redirect('/data-registration')->with('success', 'Data Terhapus!!');
-        } catch (\Exception $e){
-            return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
-        }
+        });
+        
+        return redirect('/data-registration')->with('success', 'Data Terhapus!!');
+    } catch (\Throwable $e){
+        Log::error($e->getMessage());
+        return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
     }
+}
 
     public function detailpendaftaran($id_pendaftaran)
     {
@@ -494,7 +506,7 @@ class PendaftaranController extends Controller
         
         
         $datapembayaran = Pendaftaran::where("id_pendaftaran", $id_pendaftaran)->get();
-        return view('pendaftaran.data-pendaftaran-detail', ['viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewProdi' => $dataprod]);
+        return view('pendaftaran.data-pendaftaran-detail', ['viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewjurusan' => $dataprod]);
     }
 
     public function kartupendaftaran($id_pendaftaran)
@@ -503,6 +515,6 @@ class PendaftaranController extends Controller
         $dataprod = Jurusan::all();
         $dataSekolah = Sekolah::all();
         $data = Pendaftaran::find($id_pendaftaran);
-        return view('pendaftaran.data-pendaftaran-kartu-admin', ['viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewProdi' => $dataprod]);
+        return view('pendaftaran.data-pendaftaran-kartu-admin', ['viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewjurusan' => $dataprod]);
     }
 }

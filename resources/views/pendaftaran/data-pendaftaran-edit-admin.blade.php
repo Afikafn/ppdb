@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA 
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@ Pendaftaran
         <ul aria-expanded="false">
             <li><a href="{{route('data-user')}}">Pengguna</a></li>
             <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-            <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+            <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
             <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
         </ul>
     </li>
@@ -41,7 +41,6 @@ Pendaftaran
         </a>
         <ul aria-expanded="false">
             <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-            <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
         </ul>
     </li>
     <li><a href="{{route('data-pengumuman')}}" aria-expanded="false">
@@ -268,7 +267,7 @@ Pendaftaran
                                     <div class="flex-shrink-0 me-3"> <i class="uil uil-truck text-primary h2"></i> </div>
                                     <div class="flex-grow-1 overflow-hidden">
                                         <h5 class="font-size-16 mb-1">Data Pendaftaran</h5>
-                                        <p class="text-muted text-truncate mb-0">Pilihan program studi </p>
+                                        <p class="text-muted text-truncate mb-0">Pilihan Jurusan </p>
                                     </div>
                                     <div class="flex-shrink-0"> <i
                                             class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>
@@ -280,7 +279,7 @@ Pendaftaran
                                 <div class="mb-4">
                                     <label class="form-label" for="billing-address">Gelombang</label>
                                     <select class="form-control wide" name="gelombang">    
-                                        <option value="{{ $viewData->gelombang }}" selected>{{ $viewData->jadwal->nama_kegiatan }}</option>
+                                        <option value="{{ $viewData->gelombang }}" selected>{{ $viewData->jadwal?->nama_kegiatan }}</option>
                                         @foreach ($viewDataJadwal as $x)
                                         
                                         <option value="{{$x->id}}">{{$x->nama_kegiatan}}</option>
@@ -297,11 +296,11 @@ Pendaftaran
                                     <div class="col-lg-6">
                                         <div class="mb-3 mb-4">
                                             <label class="form-label" for="personal-data-nisn">Pilihan 1</label>
-                                            <input class="form-control" value="{{ $viewData->pil1 }}" list="datalistOptionsProdi" id="exampleDataList"
+                                            <input class="form-control" value="{{ $viewData->pil1 }}" list="datalistOptionsjurusan" id="exampleDataList"
                                                 placeholder="Cari Program Studi..." name="pil1" value="{{ old('pil1') }}" autocomplete='off' >
-                                            <datalist id="datalistOptionsProdi">
-                                                @foreach ($viewProdi as $z)
-                                                    <option value="{{ $z->id_prodi }}">{{ $z->nama_prodi }}</option>
+                                            <datalist id="datalistOptionsjurusan">
+                                                @foreach ($viewjurusan as $z)
+                                                    <option value="{{ $z->id_jurusan }}">{{ $z->nama_jurusan }}</option>
                                                 @endforeach
                                             </datalist>
                                             @error('pil1')
@@ -315,11 +314,11 @@ Pendaftaran
                                     <div class="col-lg-6">
                                         <div class="mb-3 mb-4">
                                             <label class="form-label" for="personal-data-nik">Pilihan 2</label>
-                                            <input class="form-control" value="{{ $viewData->pil2 }}" list="datalistOptionsProdi" id="exampleDataList"
+                                            <input class="form-control" value="{{ $viewData->pil2 }}" list="datalistOptionsjurusan" id="exampleDataList"
                                                 placeholder="Type to search..." name="pil2" value="{{ old('pil2') }}" autocomplete='off' >
-                                            <datalist id="datalistOptionsProdi">
-                                                @foreach ($viewProdi as $z)
-                                                    <option value="{{ $z->id_prodi }}">{{ $z->nama_prodi }}</option>
+                                            <datalist id="datalistOptionsjurusan">
+                                                @foreach ($viewjurusan as $z)
+                                                    <option value="{{ $z->id_jurusan }}">{{ $z->nama_jurusan }}</option>
                                                 @endforeach
                                             </datalist>
                                             @error('pil2')
@@ -341,7 +340,7 @@ Pendaftaran
                                     <div class="flex-shrink-0 me-3"> <i class="uil uil-bill text-primary h2"></i> </div>
                                     <div class="flex-grow-1 overflow-hidden">
                                         <h5 class="font-size-16 mb-1">Data Orang Tua</h5>
-                                        <p class="text-muted text-truncate mb-0">Data orang tua, keuangan dan data.</p>
+                                        <p class="text-muted text-truncate mb-0">Data orang tua, Keuangan dan Data.</p>
                                     </div>
                                     <div class="flex-shrink-0"> <i
                                             class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>

@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-user', [UserController::class, 'datauser'])->name('data-user');
     Route::post('/save-user', [UserController::class, 'simpanuser']);
     Route::get('/edit-user/{user_id}', [UserController::class, 'edituser'])->name('edit-user');
+    Route::get('/data-user/edit/{user_id}', [UserController::class, 'edituser'])->name('edit-user');
     Route::post('/update-user/{user_id}', [UserController::class, 'updateuser'])->name('update-user');
     Route::get('/delete-user/{user_id}', [UserController::class, 'hapususer'])->name('delete-user');
 

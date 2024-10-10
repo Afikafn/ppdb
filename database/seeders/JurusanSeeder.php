@@ -18,28 +18,34 @@ class JurusanSeeder extends Seeder
         //create Jurusan
         Jurusan::create([
             'id_jurusan' => 'PRD001',
-            'Nama_jurusan' => 'TEKNOLOGI REKAYASA MANUFAKTUR',
-            'foto_jurusan' => 'foto prodi/Prodi1671193438-mesin.jpg',
+            'Nama_jurusan' => 'PENGEMBANGAN PERANGKAT LUNAK DAN GIM',
+            'foto_jurusan' => 'foto jurusan/pplg.jpg',
             'created_at' => now()
         ]);
 
         Jurusan::create([
             'id_jurusan' => 'PRD002',
-            'Nama_jurusan' => 'TEKNOLOGI REKAYASA MEKATRONIKA',
-            'foto_jurusan' => 'foto prodi/Prodi1671193459-mekatronika.jpeg',
+            'Nama_jurusan' => 'TEKNIK OTOMOTIF',
+            'foto_jurusan' => 'foto jurusan/to.jpg',
             'created_at' => now()
         ]);
         Jurusan::create([
             'id_jurusan' => 'PRD003',
-            'nama_jurusan' => 'TEKNOLOGI REKAYASA PERANGKAT LUNAK',
-            'foto_jurusan' => 'foto prodi/Prodi1671193502-trpl.jpg',
+            'nama_jurusan' => 'AGRIBISNIS TERNAK',
+            'foto_jurusan' => 'foto jurusan/at.jpg',
             'created_at' => now()
         ]);
 
         Jurusan::create([
             'id_jurusan' => 'PRD004',
-            'Nama_jurusan' => 'TEKNOLOGI LISTRIK',
-            'foto_jurusan' => 'foto prodi/Prodi1671193482-listrik.jpg',
+            'Nama_jurusan' => 'AGRIBISNIS PERIKANAN',
+            'foto_jurusan' => 'foto jurusan/ap.jpg',
+            'created_at' => now()
+        ]);
+        Jurusan::create([
+            'id_jurusan' => 'PRD005',
+            'Nama_jurusan' => 'AGRIBISNIS PENGOLAHAN HASIL PERTANIAN',
+            'foto_jurusan' => 'foto jurusan/aphp.jpg',
             'created_at' => now()
         ]);
         

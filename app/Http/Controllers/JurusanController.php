@@ -29,13 +29,13 @@ class JurusanController extends Controller
     }
 
 
-    //data prodi kompliit
-    public function dataprodi(){
+    //data jurusan kompliit
+    public function datajurusan(){
         $viewData = Jurusan::all();
         return view ('jurusan.data-jurusan-admin',compact('viewData'));
     }
 
-    public function simpanprodi(Request $a)
+    public function simpanjurusan(Request $a)
     {
         try{
 
@@ -63,35 +63,35 @@ class JurusanController extends Controller
         }
     }
 
-    public function updateprodi(Request $a, $id_prodi){
+    public function updatejurusan(Request $a, $id_jurusan){
         //$dataUser = Pengguna::all();
         try{
             $fileft = $a->file('foto');
             if(file_exists($fileft)){
-                $nama_fileft = "Prodi".time() . "-" . $fileft->getClientOriginalName();
-                $namaFolderft = 'foto prodi';
+                $nama_fileft = "jurusan".time() . "-" . $fileft->getClientOriginalName();
+                $namaFolderft = 'foto jurusan';
                 $fileft->move($namaFolderft,$nama_fileft);
                 $path = $namaFolderft."/".$nama_fileft;
             } else {
                 $path = $a->pathnya;
             }
-            Jurusan::where("id", $id_prodi)->update([
-                'nama_prodi' => $a->nama,
-                'jenjang_prodi' => $a->jenjang,
-                'foto_prodi' => $path,
+            Jurusan::where("id", $id_jurusan)->update([
+                'nama_jurusan' => $a->nama,
+                'jenjang_jurusan' => $a->jenjang,
+                'foto_jurusan' => $path,
         ]);
-            return redirect('/data-prodi')->with('success', 'Data Terubah!!');
+            return redirect('/data-jurusan')->with('success', 'Data Terubah!!');
         } catch (\Exception $e){
             return redirect()->back()->with('error', 'Data Tidak Berhasil Diubah!');
         }
     }
 
-    public function hapusprodi($id_prodi){
+    public function hapusjurusan($id_jurusan){
         //$dataUser = Pengguna::all();
         try{
-            $data = Jurusan::find($id_prodi);
+            $data = Jurusan::find($id_jurusan);
             $data->delete();
-            return redirect('/data-prodi')->with('success', 'Data Terhapus!!');
+            return redirect('/data-jurusan')->with('success', 'Data Terhapus!!');
         } catch (\Exception $e){
             return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
         }

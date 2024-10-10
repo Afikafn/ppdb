@@ -31,7 +31,7 @@ Detail Pendaftaran
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -41,7 +41,6 @@ Detail Pendaftaran
                     </a>
                     <ul aria-expanded="false">
                         <li class="mm-active"><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('data-pengumuman')}}" aria-expanded="false">
@@ -83,14 +82,13 @@ Detail Pendaftaran
                 @if ($viewData->status_pendaftaran=="Belum Terverifikasi")
                 <div class="alert alert-success alert-dismissible fade show">
                     <svg viewbox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                    <strong>Sukses!</strong> Data pendaftaranmu terkirim. Sebelum melakukan pembayaran, tunggu administrator memverifikasi datamu ya.
+                    <strong>Sukses!</strong> Data pendaftaranmu terkirim. Tunggu administrator memverifikasi datamu ya.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
                     </button>
                 </div>
-                @elseif ($viewData->status_pendaftaran=="Terverifikasi" && $viewDataPembayaran->status !="Gratis" && $viewDataPembayaran->status !="Dibayar")
+                @elseif ($viewData->status_pendaftaran=="Terverifikasi")
                 <div class="alert alert-info alert-dismissible fade show">
                     <svg viewbox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    <strong>Informasi!</strong> Segera lakukan pembayaran.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
                     </button>
                 </div>
@@ -106,18 +104,13 @@ Detail Pendaftaran
                         <!-- center modal -->
                         <div>
                             @if ($viewData->status_pendaftaran == "Belum Terverifikasi")
-                            <button class="btn btn-warning mb-4" style="margin-bottom: 1rem;" disabled>Belum Terverifikasi</button>
-                            @elseif ($viewData->status_pendaftaran == "Terverifikasi")
-                                @if ($viewDataPembayaran->status !="Gratis" && $viewDataPembayaran->status !="Dibayar")
-                                <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target=".upload"
-                                style="margin-bottom: 1rem;"><i class="mdi mdi-plus me-1"></i>Upload Pembayaran  </button>    
-                                @endif
-                            
-                            <button class="btn btn-success mb-4" style="margin-bottom: 1rem;" disabled>Terverifikasi</button>
+                                <button class="btn btn-warning mb-4" style="margin-bottom: 1rem;" disabled>Belum Terverifikasi</button>
+                            @elseif ($viewData->status_pendaftaran == "Terverifikasi")                          
+                                <button class="btn btn-success mb-4" style="margin-bottom: 1rem;" disabled>Terverifikasi</button>
                             @elseif ($viewData->status_pendaftaran == "Selesai")
-                            <button class="btn btn-primary mb-4" style="margin-bottom: 1rem;" disabled>Selesai</button>
+                                <button class="btn btn-primary mb-4" style="margin-bottom: 1rem;" disabled>Selesai</button>
                             @else
-                            <span class="badge badge-danger">Data Tidak Sah</span>
+                                <span class="badge badge-danger">Data Tidak Sah</span>
                             @endif
                         </div>
                     </div>
@@ -132,37 +125,7 @@ Detail Pendaftaran
                                         aria-label="Close">
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <form action="{{route('upload-payment')}}" method="POST" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
-                                        <div class="form-group">
-                                            <input type="hidden" name="id_pendaftaran" id="nama" class="form-control"
-                                            value="{{ $viewData->id_pendaftaran }}">
-                                            <div class="row">
-                                                <div class="col-xl-12">
-                                                    <label for="iduser">Pilih Dokumen</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">Upload</span>
-                                                        <div class="form-file">
-                                                            <input type="file" class="form-file-input form-control"
-                                                                        name="pem" >
-                                                                    <input type="hidden" class="form-file-input form-control"
-                                                                        name="pathnya">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer border-top-0 d-flex">
-                                            <button type="button" class="btn btn-danger light"
-                                                data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" name="add"
-                                                class="btn btn-primary">Perbaharui
-                                                Data</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
@@ -255,7 +218,7 @@ Detail Pendaftaran
                             </div>
                             <div class="col-lg-6">
                                 <div class="pt-4 border-bottom-1 pb-3">
-                                    <img src="{{ asset($viewData->pas_foto) }}" width="250px" height="300" alt="">
+                                    <img src="{{ asset(optional($viewData->pas_foto)->__toString() ?? '') }}" width="250px" height="300" alt="">
                                 </div>
                             </div>
                         </div>
@@ -325,7 +288,7 @@ Detail Pendaftaran
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-12 col-12">
-                                        <h5 class="f-w-400">Berkas Orang Tua <small>kk,slip gaji</small></h5>
+                                        <h5 class="f-w-400">Berkas Orang Tua <small>KK,Slip Gaji</small></h5>
                                         <div class="col-sm-9 col-7">
                                             <a href="{{ asset($viewData->berkas_siswa) }}"> <i class="fa fa-file-pdf" style="font-size:48px;color:red"></i></a>
                                         </div>
@@ -345,13 +308,13 @@ Detail Pendaftaran
                                 <div class="col-sm-4 col-4">
                                     <h5 class="f-w-400">Pilihan 1</h5>
                                     <div class="col-sm-9 col-7">
-                                        <h5 class="f-w-500">: {{ $viewData->pilihan1->nama_prodi }}</h5>
+                                        <h5 class="f-w-500">: {{ optional($viewData->pilihan2)->nama_jurusan }}</h5>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-4">
                                     <h5 class="f-w-400">Pilihan 2</h5>
                                     <div class="col-sm-9 col-7">
-                                        <h5 class="f-w-500">: {{ $viewData->pilihan2->nama_prodi }}</h5>
+                                        <h5 class="f-w-500">: {{ optional($viewData->pilihan2)->nama_jurusan }}</h5>
                                     </div>
                                 </div>
                             </div>

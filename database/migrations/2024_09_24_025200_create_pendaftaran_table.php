@@ -94,11 +94,7 @@ return new class extends Migration
 
 
             //data nilai dan sekolah
-            $table->unsignedBigInteger('sekolah');
-            $table->foreign('sekolah')
-                ->references('id')
-                ->on('sekolah')
-                ->onUpdate('cascade')->onDelete('cascade');
+            $table->string('sekolah_asal')->required();
             $table->double('smt1')->required();
             $table->double('smt2')->required();
             $table->double('smt3')->required();

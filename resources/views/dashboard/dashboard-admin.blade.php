@@ -11,8 +11,7 @@
                                     <h2>Selamat Datang, @auth
                                             {{ auth()->user()->name }}
                                         @endauth</h2>
-                                    <span>Terus pantau kegiatan penerimaan mahasiswa baru politeknik enjinering
-                                        indorama</span>
+                                    <span>Terus pantau kegiatan pendaftaran peserta didik baru</span>
                                     <a href="{{route('data-registration')}}" class="btn btn-rounded  fs-18 font-w500">Lihat
                                         pendaftar</a>
                                 </div>
@@ -29,8 +28,7 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-sm-6">
                                         <div class="items">
-                                            <h4 class="fs-20 font-w700 mb-4">Data Progress <br> Penerimaan Mahasiswa
-                                                Baru</h4>
+                                            <h4 class="fs-20 font-w700 mb-4">Data Progress <br> Pendaftaran Peserta Didik Baru</h4>
                                             <span class="fs-14 font-w400">Data yang baru masuk dan telah
                                                 diverifikasi oleh admin akan dapat melanjutkan kegiatan
                                                 penerimaan</span>

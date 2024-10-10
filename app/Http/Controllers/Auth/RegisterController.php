@@ -15,7 +15,7 @@ use Illuminate\Validation\Rules;
 use Alert;
 use App\Models\ProfileUser;
 
-class RegisteredUserController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display the registration view.

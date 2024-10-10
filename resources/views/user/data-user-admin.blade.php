@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -41,7 +41,6 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('data-pengumuman')}}" aria-expanded="false">
@@ -89,7 +88,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="save-user" method="POST" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                         <div class="form-group">
                                             <div class="row">
@@ -164,7 +163,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive" id="cetak">
-                        {{ csrf_field() }}
+                        @csrf
                         <table id="example3" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
@@ -180,26 +179,24 @@
                                 @foreach ($dataUser as $x)
                                     <tr>
                                         <td>
-                                            @if ($x->profile->foto != null)
-                                                <img class=" rounded-circle img-thumbnail" src="{{ url('/' . $x->profile->foto) }}"
-                                                    alt="" width="45px" />
+                                            @if ($x->profile && $x->profile->foto != null)
+                                                <img class=" rounded-circle img-thumbnail" src="{{ url('/' . $x->profile->foto) }}" alt="" width="45px" />
                                             @else
-                                                <img class="rounded-circle img-thumbnail"
-                                                    src="{{ asset('sipenmaru/images/ava.png') }}" alt="" width="45px" />
+                                                <img class="rounded-circle img-thumbnail" src="{{ asset('sipenmaru/images/ava.png') }}" alt="" width="45px" />
                                             @endif
                                         </td>
-                                        <td>{{ $x->profile->nama }}</td>
+                                        <td>{{ $x->profile ? $x->profile->nama : '' }}</td>
                                         <td>
-                                            @if ($x->profile->gender == 'Perempuan')
+                                            @if (optional($x->profile)->gender == 'Perempuan')
                                                 <span class="badge badge-secondary">Perempuan</span>
-                                            @elseif($x->profile->gender == 'Laki-laki')
+                                            @elseif(optional($x->profile)->gender == 'Laki-laki')
                                                 <span class="badge"
                                                     style="background-color: rgb(81, 171, 255)">Laki-Laki</span>
                                             @else
                                                 <span class="badge badge-warning">?</span>
                                             @endif
                                         </td>
-                                        <td><strong>{{ $x->profile->no_hp }}</strong></a></td>
+                                        <td><strong>{{ optional($x->profile)->no_hp ?? 'No Phone Number' }}</strong></a></td>
                                         <td><a href="javascript:void(0);"><strong>{{ $x->email }}</strong></a></td>
                                         <td>
                                             <div class="d-flex">

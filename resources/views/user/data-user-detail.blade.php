@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <div>
-                                    @if ($viewData->foto != null)
+                                @if($viewData != null && $viewData->foto != null)
                                         <img class="avatar-lg rounded-circle img-thumbnail"
                                             src="{{ url('/' . $viewData->foto) }}" alt="" width="100px" />
                                     @else
@@ -225,9 +225,7 @@
                                         <div class="row mb-2">
                                             <div class="col-sm-3 col-5">
                                                 <h2>
-                                                            <a href="https://www.instagram.com/{{ $viewData->instagram }}/"><i
-                                                                    class="fab fa-instagram" style="width: 50px"></i></a>
-                                                    
+                                                    <a href="https://www.instagram.com/{{ $viewData->instagram }}/"><i class="fab fa-instagram" style="width: 50px"></i></a>                                                    
                                                 </h2>
                                             </div>
                                         </div>
@@ -280,7 +278,7 @@
                                                             value="{{ old('jk') }}">
                                                             <option value="{{ old('jk') }}" disabled selected>Pilih
                                                                 Jenis Kelamin </option>
-                                                            <option value="Laki-laki">Laki-aki</option>
+                                                            <option value="Laki-laki">Laki-laki</option>
                                                             <option value="Perempuan">Perempuan</option>
                                                         </select>
                                                     @endif

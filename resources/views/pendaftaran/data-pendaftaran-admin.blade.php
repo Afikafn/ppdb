@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -301,8 +301,8 @@
                                                         </svg>
                                                         <div>
                                                             <small
-                                                                class="d-block fs-16 font-w400">{{ $x->pilihan1->nama_prodi }}</small>
-                                                            <span class="fs-18 font-w500">{{ $x->pilihan2->nama_prodi }}</span>
+                                                                class="d-block fs-16 font-w400">{{ $x->pilihan1->nama_jurusan }}</small>
+                                                            <span class="fs-18 font-w500">{{ $x->pilihan2->nama_jurusan }}</span>
                                                         </div>
                                                     </div>
                                                 </div>

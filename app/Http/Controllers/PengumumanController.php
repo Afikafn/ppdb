@@ -37,7 +37,7 @@ class PengumumanController extends Controller
         $data = Pengumuman::all();
         $dataid = Pendaftaran::all();
         $dataprod = Jurusan::all();
-        return view ('pengumuman.data-pengumuman-admin',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewProdi' => $dataprod]);
+        return view ('pengumuman.data-pengumuman-admin',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewjurusan' => $dataprod]);
     }
 
     public function lihatpengumuman(Request $a)
@@ -60,7 +60,7 @@ class PengumumanController extends Controller
                 'id_pengumuman' => $kode,
                 'id_pendaftaran' => $a->id_pendaftaran,
                 'hasil_seleksi' => $a->hasil,
-                'prodi_penerima' => $a->penerima,
+                'jurusan_penerima' => $a->penerima,
                 'nilai_interview' => $a->interview,
                 'nilai_test' => $a->test
             ]);
@@ -80,15 +80,15 @@ class PengumumanController extends Controller
     public function updatepengumuman(Request $a, $id_pengumuman){
         //$dataUser = ProfileUser::all();
         try{
-            $prodi =  preg_replace("/[^0-9]/", "", $a->prodi);
-            if($prodi == 0)
+            $jurusan =  preg_replace("/[^0-9]/", "", $a->jurusan);
+            if($jurusan == 0)
             {
-                $prodi = null;
+                $jurusan = null;
             }
             Pengumuman::where("id_pengumuman", $id_pengumuman)->update([
                 'id_pendaftaran' => $a->id_pendaftaran,
                 'hasil_seleksi' => $a->hasil,
-                'prodi_penerima' => $prodi,
+                'jurusan_penerima' => $jurusan,
                 'nilai_interview' => $a->interview,
                 'nilai_test' => $a->test,
             ]);

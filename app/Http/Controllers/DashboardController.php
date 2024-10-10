@@ -52,7 +52,7 @@ class DashboardController extends Controller
         $jurusan = Jurusan::limit(4)->get();
         return view('dashboard', [
             'timeline' => $timeline,
-            'viewDataUser ' => $dataUser ,
+            'viewdataUser ' => $dataUser ,
             'viewTotal' => $data,
             'viewTahunini' => $dataPendaftar,
             'pendaftar' => $pendaftar,
