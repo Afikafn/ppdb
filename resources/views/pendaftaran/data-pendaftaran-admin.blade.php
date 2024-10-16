@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PPDB SMKADA 
+    PPDB SMAKDA 
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="card-body" id="cetak">
                             <div class="table-responsive">
-                                {{ csrf_field() }}
+                               @csrf
 
                                 <table id="example" class="display" style="min-width: 845px">
                                     <thead>
@@ -177,36 +177,34 @@
                                                         <a class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target=".delete{{ $x->id_pendaftaran }}"></i></a>
-                                                        <div class="modal fade delete{{ $x->id_pendaftaran }}" tabindex="-1"
-                                                            role="dialog" aria-hidden="true">
-                                                            <div class="modal-dialog modal-sm">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Hapus Data</h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal">
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body text-center"><i
-                                                                            class="fa fa-trash"></i><br> Anda yakin ingin
-                                                                        menghapus data ini?<br>{{ $x->id_pendaftaran }}
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-danger light"
-                                                                            data-bs-dismiss="modal">Batalkan</button>
-                                                                        <a
-                                                                            href="delete-registration/{{ $x->id_pendaftaran }}">
-                                                                            <button type="submit" class="btn btn-danger shadow">
-                                                                                Ya, Hapus Data!
-                                                                            </button></a>
+                                                                <div class="modal fade delete{{ $x->id_pendaftaran }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-sm">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Hapus Data</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center"><i class="fa fa-trash"></i><br> Anda yakin ingin menghapus data ini?<br>{{ $x->id_pendaftaran }}
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-danger light"
+                                                                                    data-bs-dismiss="modal">Batalkan</button>
+                                                                                <a
+                                                                                    href="/delete-registration/{id_pendaftaran}/{{ $x->id_pendaftaran }}">
+                                                                                    <button type="submit" class="btn btn-danger shadow">
+                                                                                        Ya, Hapus Data!
+                                                                                    </button></a>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                         @endforeach
+
+
                                     </tbody>
                                 </table>
                             </div>

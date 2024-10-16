@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@ Detail Pendaftaran
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -218,8 +218,7 @@ Detail Pendaftaran
                             </div>
                             <div class="col-lg-6">
                                 <div class="pt-4 border-bottom-1 pb-3">
-                                    <img src="{{ asset(optional($viewData->pas_foto)->__toString() ?? '') }}" width="250px" height="300" alt="">
-                                </div>
+                                    <img src="{{ asset($viewData->pas_foto) }}" width="250px" height="300" alt="">                                </div>
                             </div>
                         </div>
 
@@ -308,7 +307,7 @@ Detail Pendaftaran
                                 <div class="col-sm-4 col-4">
                                     <h5 class="f-w-400">Pilihan 1</h5>
                                     <div class="col-sm-9 col-7">
-                                        <h5 class="f-w-500">: {{ optional($viewData->pilihan2)->nama_jurusan }}</h5>
+                                        <h5 class="f-w-500">: {{ optional($viewData->pilihan1)->nama_jurusan }}</h5>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 col-4">

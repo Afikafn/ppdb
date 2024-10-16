@@ -61,14 +61,14 @@ Route::middleware('auth')->group(function () {
     //jurusan
     Route::get('/data-jurusan', [JurusanController::class, 'datajurusan'])->name('data-jurusan');
     Route::post('/save-jurusan', [JurusanController::class, 'simpanjurusan']);
-    Route::post('/update-jurusan/{id_jurusan}', [JurusanController::class, 'updatejurusan']);
-    Route::get('/delete-jurusan/{id_jurusan}', [JurusanController::class, 'hapusjurusan']);
+    Route::put('/update-jurusan/{id_jurusan}', [JurusanController::class, 'updatejurusan']);
+    Route::delete('/delete-jurusan/{id_jurusan}', [JurusanController::class, 'hapusjurusan']);
 
     //jadwal
     Route::get('/data-jadwal', [JadwalKegiatanController::class, 'datajadwal'])->name('data-jadwal');
     Route::post('/save-jadwal', [JadwalKegiatanController::class, 'simpanjadwal']);
-    Route::post('/update-jadwal/{id}', [JadwalKegiatanController::class, 'updatejadwal']);
-    Route::get('/delete-jadwal/{id}', [JadwalKegiatanController::class, 'hapusjadwal']);
+    Route::put('/update-jadwal/{id}', [JadwalKegiatanController::class, 'updatejadwal']);
+    Route::delete('/delete-jadwal/{id}', [JadwalKegiatanController::class, 'hapusjadwal']);
 
     //pendaftaran
     Route::get('/data-registration', [PendaftaranController::class, 'datapendaftaran'])->name('data-registration');
@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-registration/{id_pendaftaran}', [PendaftaranController::class, 'editpendaftaran']);
     Route::post('/update-registration/{id_pendaftaran}', [PendaftaranController::class, 'updatependaftaran']);
     Route::get('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran']);
+    //Route::delete('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran'])->name('delete-registration');
     Route::get('/detail-registration/{id_pendaftaran}', [PendaftaranController::class, 'detailpendaftaran']);
     Route::get('/card-registration/{id_pendaftaran}', [PendaftaranController::class, 'kartupendaftaran']);
 
@@ -90,8 +91,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/view-announcement/{id_pendaftaran}', [PengumumanController::class, 'lihatpengumuman']);
     //Route::get('/view-announcement', [PengumumanController::class, 'lihatpengumuman']);
     Route::post('/save-announcement', [PengumumanController::class, 'simpanpengumuman']);
-    Route::post('/update-announcement/{id_pengumuman}', [PengumumanController::class, 'updatepengumuman']);
-    Route::get('/delete-announcement/{id_pengumuman}', [PengumumanController::class, 'hapuspengumuman']);
+    Route::put('/update-announcement/{id_pengumuman}', [PengumumanController::class, 'updatepengumuman']);
+    Route::delete('/delete-announcement/{id_pengumuman}', [PengumumanController::class, 'hapuspengumuman']);
 });
 
 require __DIR__.'/auth.php';

@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{ route('data-user') }}">Pengguna</a></li>
                         <li><a href="{{ route('data-sekolah') }}">Sekolah</a></li>
-                        <li><a href="{{ route('data-jurusan') }}">Program Studi</a></li>
+                        <li><a href="{{ route('data-jurusan') }}">Jurusan</a></li>
                         <li><a href="{{ route('data-jadwal') }}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -246,8 +246,10 @@
                                             <div class="input-group">
                                                 <span class="input-group-text">Upload</span>
                                                 <div class="form-file">
-                                                    <input type="file" class="form-file-input form-control"
-                                                        name="foto" value="{{ old('foto') }}" accept="image/png, image/jpg, image/jpeg" required>
+                                                    <input type="file" class="form-file-input form-control" name="foto" value="{{ old('foto') }}" accept="image/png, image/jpg, image/jpeg">
+                                                    @if(isset($data->foto)) <!-- Check if the photo exists -->
+                                                        <img src="{{ asset('storage/' . $data->foto) }}" alt="Pas Photo" width="100" height="100"> <!-- Display the uploaded photo -->
+                                                    @endif
                                                 </div>
                                             </div>
                                             @error('foto')
@@ -352,7 +354,7 @@
                                             <label class="form-label" for="personal-data-nisn">Pilihan
                                                 1</label>
                                             <input class="form-control" list="datalistOptionsjurusan" id="exampleDataList"
-                                                placeholder="Pilih program studi" name="pil1"
+                                                placeholder="Pilih Jurusan" name="pil1"
                                                 value="{{ old('pil1') }}" required>
                                             <datalist id="datalistOptionsjurusan">
                                                 @foreach ($viewjurusan as $z)
@@ -372,7 +374,7 @@
                                         <div class="mb-3 mb-4">
                                             <label class="form-label" for="personal-data-nik">Pilihan 2</label>
                                             <input class="form-control" list="datalistOptionsjurusan" id="exampleDataList"
-                                                placeholder="Pilih program studi" name="pil2"
+                                                placeholder="Pilih Jurusan" name="pil2"
                                                 value="{{ old('pil2') }}" required>
                                             <datalist id="datalistOptionsjurusan">
                                                 @foreach ($viewjurusan as $z)

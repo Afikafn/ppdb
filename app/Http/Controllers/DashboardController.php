@@ -49,7 +49,8 @@ class DashboardController extends Controller
         $jmlpengumuman = Pengumuman::select('hasil_seleksi', DB::raw('count(*) as jumlah'))
             ->groupBy('hasil_seleksi')
             ->get();
-        $jurusan = Jurusan::limit(4)->get();
+        $jurusan = Jurusan::limit(5)->get();
+        $hasil = Pengumuman::all();
         return view('dashboard', [
             'timeline' => $timeline,
             'viewdataUser ' => $dataUser ,
@@ -58,6 +59,7 @@ class DashboardController extends Controller
             'pendaftar' => $pendaftar,
             'jmlpengumuman' => $jmlpengumuman,
             'jmlpendaftar' => $jmlpendaftar,
+            'hasil' => $hasil,
             'jmlpendaftarjurusan' => $jmlpendaftarperjurusan,
             'jmluser' => $jmluser,
             'jurusan' => $jurusan,

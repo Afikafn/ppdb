@@ -15,15 +15,15 @@ class SekolahController extends Controller
     {
         $this->middleware(function($request,$next){
             if (session('success')) {
-                Session::success(session('success'));
+                Session::flash('success', session('success'));
             }
 
             if (session('error')) {
-                Session::error(session('error'));
+                Session::flash('error', session('error'));
             }
             
             if (session('warning')) {
-                Session::warning(session('warning'));
+                Session::flash('warning', session('warning'));
             }
             return $next($request);
         });
@@ -40,10 +40,9 @@ class SekolahController extends Controller
         //$dataUser = Pengguna::all();
         try {
             Sekolah::create([
-                'NPSN' => $a->id,
+                'npsn' => $a->id,
                 'nama_sekolah' => $a->nama,
-                'alamat' => $a->Address,
-                'kota' => $a->kota
+                'kecamatan' => $a->kecamatan
 
             ]);
             return redirect('/data-sekolah')->with('success', 'Data Tersimpan!!');
@@ -52,13 +51,12 @@ class SekolahController extends Controller
             //return redirect()->back()->with('error', 'Data Tidak Berhasil Disimpan!');
         }
     }
-    public function updatesekolah(Request $a, $NPSN){
+    public function updatesekolah(Request $a, $npsn){
         //$dataUser = Pengguna::all();
     try{
-        Sekolah::where("NPSN", "$NPSN")->update([
+        Sekolah::where("npsn", "$npsn")->update([
             'nama_sekolah' => $a->nama,
-            'alamat' => $a->Address,
-            'kota' => $a->kota
+            'kecamatan' => $a->kecamatan
         ]);
         return redirect('/data-sekolah')->with('success', 'Data Terubah!!');
     } catch (\Exception $e){
@@ -66,10 +64,12 @@ class SekolahController extends Controller
         }
     }
 
-    public function hapussekolah($NPSN){
+    
+
+    public function hapussekolah($npsn){
         //$dataUser = Pengguna::all();
     try{
-        $dataSekolah = Sekolah::find($NPSN);
+        $dataSekolah = Sekolah::find($npsn);
         $dataSekolah->delete();
         return redirect('/data-sekolah')->with('success', 'Data Terhapus!!');
     } catch (\Exception $e){

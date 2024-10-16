@@ -93,7 +93,7 @@
                                                 <div class="col-xl-4">
                                                     <label for="iduser">NPSN</label>
                                                     <input type="text" class="form-control" id="nama"
-                                                        placeholder="Enter ID NPSN" name="id" required>
+                                                        placeholder="Enter ID npsn" name="id" required>
                                                 </div>
                                                 <div class="col-xl-8">
                                                     <label for="iduser">Nama Sekolah</label>
@@ -103,25 +103,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="iduser">Alamat</label>
-                                            <textarea name="Address" id="" cols="30" rows="5" class="form-control"
-                                                placeholder="Enter Address"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="iduser">Kabupaten/Kota</label>
+                                            <label for="iduser">Kecamatan</label>
                                             
-                                            <input class="form-control" list="datalistOptionsSekolah"
-                                            id="exampleDataList" placeholder="Pilih wilayah" name="kota"
-                                            value="{{ old('kota') }}">
-                                        <datalist id="datalistOptionsSekolah">
-                                            <option value="Purwakarta">Purwakarta</option>
-                                            <option value="Subang">Subang</option>
-                                            <option value="Karawang">Karawang</option>
-                                            <option value="Bandung">Bandung</option>
-                                            <option value="Banten">Banten</option>
-                                            <option value="Bekasi">Bekasi</option>
-                                            <option value="Bogor">Bogor</option>
-                                        </datalist>
+                                            <input class="form-control" id="exampleDataList" placeholder="Pilih wilayah" name="kecamatan" required>
+                                        
                                         </div>
                                         <div class="modal-footer border-top-0 d-flex">
                                             <button type="button" class="btn btn-danger light"
@@ -144,8 +129,7 @@
                                     <th>No</th>
                                     <th>NPSN</th>
                                     <th>Nama Sekolah</th>
-                                    <th>Alamat</th>
-                                    <th>Kota</th>
+                                    <th>Kecamatan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -154,19 +138,18 @@
                                 @foreach ($viewData as $x)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $x->NPSN }}</td>
+                                        <td>{{ $x->npsn }}</td>
                                         <td>{{ $x->nama_sekolah }}</td>
-                                        <td>{{ $x->alamat }}</td>
-                                        <td>{{ $x->kota }}</td>
+                                        <td>{{ $x->kecamatan }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-primary shadow btn-xs sharp me-1" title="Edit"
-                                                    data-bs-toggle="modal" data-bs-target=".edit{{ $x->NPSN }}"><i
+                                                    data-bs-toggle="modal" data-bs-target=".edit{{ $x->npsn }}"><i
                                                         class="fa fa-pencil-alt"></i></a>
                                                 <a class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target=".delete{{  $x->NPSN }}"></i></a>
-                                                <div class="modal fade delete{{  $x->NPSN }}" tabindex="-1"
+                                                        data-bs-target=".delete{{  $x->npsn }}"></i></a>
+                                                <div class="modal fade delete{{  $x->npsn }}" tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm">
                                                         <div class="modal-content">
@@ -177,12 +160,12 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body text-center"><i
-                                                                    class="fa fa-trash"></i><br>  Anda yakin ingin menghapus data ini?<br>{{ $x->NPSN }}
+                                                                    class="fa fa-trash"></i><br>  Anda yakin ingin menghapus data ini?<br>{{ $x->npsn }}
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger light"
                                                                     data-bs-dismiss="modal">Batalkan</button>
-                                                                <a href="delete-school/{{ $x->NPSN }}">
+                                                                <a href="delete-school/{{ $x->npsn }}">
                                                                     <button type="submit" class="btn btn-danger shadow">
                                                                         Ya, Hapus Data!
                                                                     </button></a>
@@ -194,7 +177,7 @@
                                         </td>
                                     </tr>
 
-                                    <div class="modal fade edit{{ $x->NPSN }}" tabindex="-1" role="dialog"
+                                    <div class="modal fade edit{{ $x->npsn }}" tabindex="-1" role="dialog"
                                         aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
                                         <div class="modal-dialog modal-dialog-centered">
@@ -206,17 +189,16 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="update-school/{{ $x->NPSN }}" method="POST"
-                                                        enctype="multipart/form-data">
+                                                    <form action="/update-school/ {{ $x->npsn }}" method="POST" enctype="multipart/form-data">
                                                         {{ csrf_field() }}
                                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-xl-4">
-                                                                    <label for="iduser">NPSN</label>
+                                                                    <label for="iduser">npsn</label>
                                                                     <input type="text" class="form-control" id="nama"
-                                                                        value="{{ $x->NPSN }}"
-                                                                        placeholder="Enter ID NPSN" name="id" readonly>
+                                                                        value="{{ $x->npsn }}"
+                                                                        placeholder="Enter ID npsn" name="id" readonly>
                                                                 </div>
                                                                 <div class="col-xl-8">
                                                                     <label for="iduser">Nama Sekolah</label>
@@ -228,23 +210,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="iduser">Alamat</label>
-                                                            <textarea name="Address" id="" cols="30" rows="5"
-                                                                class="form-control">{{ $x->alamat }}</textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="iduser">Kabupaten/Kota</label>
-                                                            <input class="form-control" list="datalistOptionsSekolah"
-                                                                id="exampleDataList" name="kota" value="{{ $x->kota }}">
-                                                            <datalist id="datalistOptionsSekolah">
-                                                                <option value="Purwakarta">Purwakarta</option>
-                                                                <option value="Subang">Subang</option>
-                                                                <option value="Karawang">Karawang</option>
-                                                                <option value="Bandung">Bandung</option>
-                                                                <option value="Banten">Banten</option>
-                                                                <option value="Bekasi">Bekasi</option>
-                                                                <option value="Bogor">Bogor</option>
-                                                            </datalist>
+                                                            <label for="iduser">Kecamatan</label>
+                                                            <input class="form-control" list="datalistOptionsSekolah" name="kecamatan" value="{{ $x->kecamatan }}">
                                                         </div>
                                                         <div class="modal-footer border-top-0 d-flex">
                                                             <button type="button" class="btn btn-danger light"

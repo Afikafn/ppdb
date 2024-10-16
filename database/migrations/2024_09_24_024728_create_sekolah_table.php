@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('npsn')->unique();
             $table->string('nama_sekolah');
-            $table->string('alamat');
-            $table->string('kota');
+            $table->string('kecamatan');
             $table->timestamps();
         });
     }

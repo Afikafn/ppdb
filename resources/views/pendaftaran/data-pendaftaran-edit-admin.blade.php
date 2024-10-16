@@ -202,12 +202,13 @@ Pendaftaran
                                             <div class="input-group">
                                                 <span class="input-group-text">Upload</span>
                                                 <div class="form-file">
-                                                    <input type="file" class="form-file-input form-control" name="foto"
-                                                        value="{{ old('foto') }}">
-                                                    <input type="hidden" name="pathFoto" class="form-control-file"
-                                                        value="{{ $viewData->foto }}">
+                                                    <input type="file" class="form-file-input form-control" name="foto">
+                                                    <input type="hidden" name="pathFoto" class="form-control-file" value="{{ $viewData->foto }}">
                                                 </div>
                                             </div>
+                                            @if(isset($viewData) && $viewData->foto)
+                                                <img src="{{ asset($viewData->foto) }}" alt="" width="100" height="100">
+                                            @endif
                                             @error('foto')
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>Peringatan!</strong>
@@ -300,9 +301,10 @@ Pendaftaran
                                                 placeholder="Cari Program Studi..." name="pil1" value="{{ old('pil1') }}" autocomplete='off' >
                                             <datalist id="datalistOptionsjurusan">
                                                 @foreach ($viewjurusan as $z)
-                                                    <option value="{{ $z->id_jurusan }}">{{ $z->nama_jurusan }}</option>
+                                                    <option value="{{ $z->id }}">{{ $z->nama_jurusan }}</option>
                                                 @endforeach
                                             </datalist>
+                                            
                                             @error('pil1')
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>Peringatan!</strong>
@@ -318,7 +320,7 @@ Pendaftaran
                                                 placeholder="Type to search..." name="pil2" value="{{ old('pil2') }}" autocomplete='off' >
                                             <datalist id="datalistOptionsjurusan">
                                                 @foreach ($viewjurusan as $z)
-                                                    <option value="{{ $z->id_jurusan }}">{{ $z->nama_jurusan }}</option>
+                                                    <option value="{{ $z->id }}">{{ $z->nama_jurusan }}</option>
                                                 @endforeach
                                             </datalist>
                                             @error('pil2')

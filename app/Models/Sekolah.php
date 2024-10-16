@@ -10,7 +10,7 @@ class Sekolah extends Model
     use HasFactory;
     protected $table = "sekolah";
     protected $primaryKey= "npsn";
-    protected $fillable = ["npsn","nama_sekolah","alamat","kota"];
+    protected $fillable = ["npsn","nama_sekolah","kecamatan"];
     public $timestamps = false;
     public $incrementing = false;
 

@@ -224,9 +224,9 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-sm-3 col-5">
-                                                <h2>
-                                                    <a href="https://www.instagram.com/{{ $viewData->instagram }}/"><i class="fab fa-instagram" style="width: 50px"></i></a>                                                    
-                                                </h2>
+                                                <h5 class="f-w-500"><i class="fab fa-instagram"></i>
+                                                    {{ $viewData->instagram }}
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -243,13 +243,13 @@
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Nama</label>
                                                         <input type="text" value="{{ $viewData->nama }}"
-                                                            class="form-control" name="nama" readonly>
+                                                            class="form-control" name="nama">
                                                         
                                                     </div>
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Email</label>
                                                         <input type="email" value="{{ $viewData->email }}"
-                                                            class="form-control" name="email" readonly>
+                                                            class="form-control" name="email">
                                                     </div>
                                                 </div>
                                                         <input type="hidden" name="id" class="form-control-file"

@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-jurusan')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -77,8 +77,7 @@
                     </div>
 
 
-                    <div class="modal fade modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -87,9 +86,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="save-user" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
+                                    <form action="/save-user" method="POST" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-xl-12">
@@ -116,13 +114,13 @@
                                                     <select class="default-select form-control wide" title="Jenis Kelamin"
                                                         name="gender" required>
                                                         <option value="Laki-laki" disabled>Pilih Jenis Kelamin</option>
-                                                        <option value="Perempuan">Female</option>
-                                                        <option value="Laki-laki">Male</option>
+                                                        <option value="Perempuan">Perempuan</option>
+                                                        <option value="Laki-laki">Laki-laki</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xl-6">
                                                     <label for="iduser">Telepon</label>
-                                                    <input type="number" class="form-control" placeholder="Enter Telepon"
+                                                    <input type="text" class="form-control" placeholder="Enter Telepon"
                                                         name="nohp" required>
                                                 </div>
                                             </div>
@@ -135,7 +133,7 @@
                                                         name="level" required>
                                                         <option value="Calon Mahasiswa" disabled>Pilih Role</option>
                                                         <option value="Administrator">Administrator</option>
-                                                        <option value="Calon Mahasiswa">Calon Mahasiswa</option>
+                                                        <option value="Calon Mahasiswa">Calon Siswa</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xl-6">
@@ -157,9 +155,9 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive" id="cetak">
@@ -178,6 +176,7 @@
                             <tbody>
                                 @foreach ($dataUser as $x)
                                     <tr>
+                                        
                                         <td>
                                             @if ($x->profile && $x->profile->foto != null)
                                                 <img class=" rounded-circle img-thumbnail" src="{{ url('/' . $x->profile->foto) }}" alt="" width="45px" />
@@ -185,19 +184,20 @@
                                                 <img class="rounded-circle img-thumbnail" src="{{ asset('sipenmaru/images/ava.png') }}" alt="" width="45px" />
                                             @endif
                                         </td>
-                                        <td>{{ $x->profile ? $x->profile->nama : '' }}</td>
+                                        
+                                        <td>{{ optional($x->profile)->nama }}</td>
                                         <td>
-                                            @if (optional($x->profile)->gender == 'Perempuan')
+                                            @if($x->profile && $x->profile->gender == 'Perempuan')
                                                 <span class="badge badge-secondary">Perempuan</span>
-                                            @elseif(optional($x->profile)->gender == 'Laki-laki')
-                                                <span class="badge"
-                                                    style="background-color: rgb(81, 171, 255)">Laki-Laki</span>
+                                            @elseif($x->profile && $x->profile->gender == 'Laki-laki')
+                                                <span class="badge" style="background-color: rgb(81, 171, 255)">Laki-Laki</span>
                                             @else
                                                 <span class="badge badge-warning">?</span>
                                             @endif
                                         </td>
-                                        <td><strong>{{ optional($x->profile)->no_hp ?? 'No Phone Number' }}</strong></a></td>
-                                        <td><a href="javascript:void(0);"><strong>{{ $x->email }}</strong></a></td>
+                                        
+                                        <td><strong>{{ $x->no_hp }}</strong></td>
+                                        <td>{{ $x->email }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-light shadow btn-xs sharp me-1" title="Data Registration"

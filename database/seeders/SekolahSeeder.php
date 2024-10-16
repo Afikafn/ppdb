@@ -17,10 +17,23 @@ class SekolahSeeder extends Seeder
     {
         //create ProgramStudi
         Sekolah::create([
-            'npsn' => '2303241',
-            'nama_sekolah' => 'SMAN 3 Purwakarta',
-            'alamat' => 'Purwakarta',
-            'kota' => 'Purwakarta',
+            'npsn' => '20303097',
+            'nama_sekolah' => 'SMPN 1 Karangreja',
+            'kecamatan' => 'Karangreja',
+            'created_at' => now()
+        ]);
+
+        Sekolah::create([
+            'npsn' => '20303156',
+            'nama_sekolah' => 'SMPN 2 Karangreja',
+            'kecamatan' => 'Karangreja',
+            'created_at' => now()
+        ]);
+
+        Sekolah::create([
+            'npsn' => '20356158',
+            'nama_sekolah' => 'SMPN 3 Karangreja',
+            'kecamatan' => 'Karangreja',
             'created_at' => now()
         ]);
 

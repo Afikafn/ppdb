@@ -126,7 +126,7 @@ class Pendaftaran extends Model
         return $this->hasMany(Pengumuman::class);
     }
 
-    public function skolah(){
+    public function sekolah(){
         return $this->belongsTo(Sekolah::class,'sekolah');
     }
 

@@ -10,6 +10,7 @@ use App\Models\ProfileUser;
 use App\Models\Timeline;
 use File;
 use Alert;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -40,35 +41,38 @@ class UserController extends Controller
         $kode = ProfileUser::id();
         return view ('user.data-user-admin',compact('dataUser','kode'));
     }
+    
 
     public function simpanuser(Request $a)
     {
-        //dd('Regist Berhasil');
-        //return redirect('/data-user')->with('berhasil','data berhasil disimpanI');
-    try{
-        $password = Hash::make($a->input('password'));
-      
-        $checkuser = User::where('email',$a->email)->first();
-        if($checkuser){
-            return redirect()->back()->with('warning', 'Email Telah Terdaftar!');
-        }
-        User  ::create([
-            'name' => $a->input('name'),
-            'email' => $a->input('email'),
-            'password' => $password,
-            'role' => $a->input('level'),
-            'created_at' => now()
-        ]);
-        $usersid  = User::orderBy('id', 'DESC')->first();
-    	$file = $a->file('foto');
-            if(file_exists($file)){
+        try {
+
+            $password = Hash::make($a->input('password'));
+
+            $checkuser = User::where('email', $a->email)->first();
+            if ($checkuser) {
+                return redirect()->back()->with('warning', 'Email Telah Terdaftar!');
+            }
+
+            $user = User::create([
+                'name' => $a->input('name'),
+                'email' => $a->input('email'),
+                'password' => $password,
+                'role' => $a->input('level'),
+                'created_at' => now()
+            ]);
+
+            $usersid = $user->id;
+
+            if ($a->hasFile('foto')) {
+                $file = $a->file('foto');
                 $nama_file = time() . "-" . $file->getClientOriginalName();
                 $namaFolder = 'foto profil';
-                $file->move($namaFolder,$nama_file);
-                $pathFoto = $namaFolder."/".$nama_file;
+                $file->move(public_path($namaFolder), $nama_file);
+                $pathFoto = $namaFolder . "/" . $nama_file;
 
-                ProfileUser::create([
-                    'user_id' => $usersid->id,
+                ProfileUser  ::create([
+                    'user_id' => $usersid,
                     'nama' => $a->nama,
                     'email' => $a->email,
                     'tanggal_lahir' => "2000-01-01",
@@ -77,8 +81,8 @@ class UserController extends Controller
                     'foto' => $pathFoto
                 ]);
             } else {
-                ProfileUser::create([
-                    'user_id' => $usersid->id,
+                ProfileUser  ::create([
+                    'user_id' => $usersid,
                     'nama' => $a->nama,
                     'email' => $a->email,
                     'tanggal_lahir' => "2000-01-01",
@@ -86,20 +90,22 @@ class UserController extends Controller
                     'no_hp' => $a->nohp,
                 ]);
             }
-        
-        Timeline::create([
-            'user_id' => $usersid->id,
-            'status' => "Bergabung",
-            'pesan' => 'Membuat Akun baru',
-            'tgl_update' => now(),
-            'created_at' => now()
-        ]);
-        return redirect('/data-user')->with('success', 'Data Tersimpan!');
-    }catch (\Exception $e){
-        //echo $e;
-        return redirect()->back()->with('error', 'Data Tidak Tersimpan, Periksa kembali inputan ada!');
+
+            Timeline::create([
+                'user_id' => $usersid,
+                'status' => "Bergabung",
+                'pesan' => 'Membuat Akun baru',
+                'tgl_update' => now(),
+                'created_at' => now()
+            ]);
+
+            return redirect('/data-registration')->with('success', 'Data Tersimpan!!');
+            } catch (\Exception $e){
+                echo $e->getMessage();
+                //return redirect()->back()->with('error', 'Data Tidak Berhasil Tersimpan!');
+            }
     }
-    }
+
 
     public function edituser($user_id)
     {
@@ -109,63 +115,20 @@ class UserController extends Controller
     }
 
 
-    public function updateuser($id, Request $a)
+    
+    public function updateuser(Request $request, string $id)
 {
-    try {
-        $dataUser  = ProfileUser ::all();
-        $message = [
-            'tempat.required' => 'Tempat lahir tidak boleh kosong',
-            'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
-            'jk.required' => 'Jenis Kelamin harus dipilih',
-            'hp.required' => 'Family card cannot be empty',
-            'alamat.required' => 'School name must be filled',
-            'ig.required' => 'Major must be filled',
-        ];
+    $profileuser = ProfileUser::find($id);
+    $profileuser->update([
+        'tempat_lahir' => $request->tempat,
+        'tanggal_lahir' => $request->tanggal,
+        'gender' => $request->jk,
+        'no_hp' => $request->hp,
+        'alamat' => $request->alamat,
+        'instagram' => $request->ig,
+    ]);
 
-        $cekValidasi = $a->validate([
-            'tempat' => 'required',
-            'tanggal' => 'required',
-            'jk' => 'required',
-            'hp' => 'required',
-            'alamat' => 'required',
-            'ig' => 'required'
-        ], $message);
-
-        $file = $a->file('foto');
-        if (file_exists($file)) {
-            $nama_file = time() . "-" . $file->getClientOriginalName();
-            $namaFolder = 'foto profil';
-            $file->move($namaFolder, $nama_file);
-            $pathFoto = $namaFolder . "/" . $nama_file;
-        } else {
-            $pathFoto = $a->pathFoto;
-        }
-
-        $profileUser  = ProfileUser ::find($id);
-        $profileUser ->update([
-            'foto' => $pathFoto,
-            'tempat_lahir' => $a->tempat,
-            'tanggal_lahir' => $a->tanggal,
-            'gender' => $a->jk,
-            'no_hp' => $a->hp,
-            'alamat' => $a->alamat,
-            'instagram' => $a->ig
-        ]);
-
-        Timeline::create([
-            'user_id' => $id,
-            'status' => "Mengedit User",
-            'pesan' => 'Membuat Akun baru',
-            'tgl_update' => now(),
-            'created_at' => now()
-        ]);
-
-        session()->flash('instagram', $profileUser ->instagram);
-        return redirect()->route('data-user')->with("success", 'Data Berhasil Diubah');
-    } catch (\Exception $e) {
-        session()->flash('error', 'Data Tidak Berhasil Diubah!');
-        return redirect()->back();
-    }
+    return redirect('/data-user')->with("success",'Data Berhasil Diupdate');
 }
 
     public function hapususer($user_id){

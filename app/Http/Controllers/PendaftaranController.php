@@ -6,19 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\ProfileUser;
 use App\Models\Sekolah;
 use App\Models\Pendaftaran;
-use App\Models\Pembayaran;
 use App\Models\Pengumuman;
 use App\Models\Timeline;
 use App\Models\JadwalKegiatan;
 use App\Models\Jurusan;
 use App\Models\ProfileUsers;
-//use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Http\Exceptions\PostTooLargeException;
-//use Illuminate\Support\Facades\Hash;
-//Use Illuminate\Support\Carbon;
-use File;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -56,79 +53,21 @@ class PendaftaranController extends Controller
         $datenow = date('Y-m-d');
         $dataJadwal = JadwalKegiatan::where("tgl_mulai","<=",$datenow)->where("tgl_akhir",">",$datenow)->where("jenis_kegiatan","Pendaftaran")->get();
         $dataSekolah = Sekolah::all();
-        return view ('pendaftaran.data-pendaftaran-input-admin',['viewDataJadwal' => $dataJadwal,'viewSekolah' => $dataSekolah,'viewjurusan' => $datajurusan]);
+        $viewData = (object) [
+            'foto' => 'path_to_your_image.jpg' // Replace with the actual path to your image
+        ];
+        return view ('pendaftaran.data-pendaftaran-input-admin',[
+            'viewDataJadwal' => $dataJadwal,
+            'viewSekolah' => $dataSekolah,
+            'viewjurusan' => $datajurusan,
+            'viewData' => $viewData
+        ]);
     }
 
     public function simpanpendaftaran(Request $a)
     {
         try{
         $dataUser = ProfileUser::all();
-        // $message = [
-        //     'nisn.required' => 'NISN must be filled',
-        //     'nik.required' => 'NIK must be filled',
-        //     'nama.required' => 'Name must be filled',
-        //     'jk.required' => 'Gender must be filled',
-        //     'foto.required' => 'Photo cannot be empty',
-        //     'tempatlahir.required' => 'Birthplace must be filled',
-        //     'tanggallahir.required' => 'Date of birth must be filled',
-        //     'agama.required' => 'Religion must be filled',
-        //     'alamat.required' => 'Address must be filled',
-        //     'email.required' => 'Email must be filled',
-        //     'nohp.required' => 'Mobile phone must be filled',
-        //     'gelombang.required' => 'Batch must be filled',
-        //     'pil1.required' => 'jurusan choice must be filled',
-        //     'pil2.required' => 'jurusan choice must be filled',
-        //     'ayah.required' => 'Father`s name must be filled',
-        //     'ibu.required' => 'Mother`s name must be filled',
-        //     'pekerjaanayah.required' => 'Father`s occupation must be filled',
-        //     'pekerjaanibu.required' => 'Mother`s occupation must be filled',
-        //     'noayah.required' => 'Father`s phone number must be filled',
-        //     'noibu.required' => 'Mother`s phone number must be filled',
-        //     'penghasilan_ayah.required' => 'PaySlip must be filled',
-        //     'penghasilan_ibu.required' => 'PaySlip must be filled',
-        //     'ftberkas.required' => 'PaySlip cannot be empty',
-        //     'sekolah.required' => 'School name must be filled',
-        //     'smt1.required' => 'Semester 1 must be filled',
-        //     'smt2.required' => 'Semester 2 must be filled',
-        //     'smt3.required' => 'Semester 3 must be filled',
-        //     'smt4.required' => 'Semester 4 must be filled',
-        //     'smt5.required' => 'Semester 5 must be filled',
-        //     'ftberkas_siswa.required' => 'Raport cannot be empty',
-        // ];
-
-        // $cekValidasi = $a->validate([
-        //     'nisn' => 'required',
-        //     'nik' => 'required',
-        //     'nama' => 'required',
-        //     'jk' => 'required',
-        //     'foto' => 'required',
-        //     'tempatlahir' => 'required',
-        //     'tanggallahir' => 'required',
-        //     'agama' => 'required',
-        //     'alamat' => 'required',
-        //     'email' => 'required',
-        //     'nohp' => 'required',
-        //     'gelombang' => 'required',
-        //     'pil1' => 'required',
-        //     'pil2' => 'required',
-        //     'ayah' => 'required',
-        //     'ibu' => 'required',
-        //     'pekerjaanayah' => 'required',
-        //     'pekerjaanibu' => 'required',
-        //     'noayah' => 'required',
-        //     'noibu' => 'required',
-        //     'penghasilan_ayah' => 'required',
-        //     'penghasilan_aibu' => 'required',
-        //     'ftberkas_ortu' => 'required',
-        //     'sekolah' => 'required',
-        //     'smt1' => 'required',
-        //     'smt2' => 'required',
-        //     'smt3' => 'required',
-        //     'smt4' => 'required',
-        //     'smt5' => 'required',
-        //     'ftberkas_siswa' => 'required'
-        // ], $message);
-
         $kodependaftaran = Pendaftaran::id();
 
         
@@ -434,7 +373,7 @@ class PendaftaranController extends Controller
             'email' => $a->email,
             'hp' => $a->nohp,
             'gelombang' => $a->gelombang,
-            'tahun_masuk' => '2021',
+            'tahun_masuk' => '2025',
             'pil1' => $a->pil1,
             'pil2' => $a->pil2,
             'nama_ayah' => $a->ayah,
@@ -470,31 +409,27 @@ class PendaftaranController extends Controller
         }
     }
 
-public function hapuspendaftaran($id_pendaftaran){
-    try{
-        DB::transaction(function () use ($id_pendaftaran) {
-            $data = Pendaftaran::find($id_pendaftaran);
-            
-            // Check if files exist before deleting
-            if (Storage::disk('public')->exists($data->pas_foto)) {
-                Log::debug("File exists: " . $data->pas_foto);
-                Storage::disk('public')->delete($data->pas_foto);
-                Log::debug("File deleted: " . $data->pas_foto);
-            } else {
-                Log::debug("File does not exist: " . $data->pas_foto);
+
+        // PendaftaranController.php
+
+        public function hapuspendaftaran($id_pendaftaran)
+        {
+            //$dataUser = ProfileUsers::all();
+            try{
+                $data = Pendaftaran::find($id_pendaftaran);
+                File::delete($data->pas_foto);
+                File::delete($data->berkas_ortu);
+                File::delete($data->berkas_siswa);
+                File::delete($data->prestasi);
+                
+                
+                $data->delete();
+                return redirect('/data-registration')->with('success', 'Data Terhapus!!');
+            } catch (\Exception $e){
+                return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
             }
+        }
             
-            // Repeat the same process for the other files
-            
-            $data->delete();
-        });
-        
-        return redirect('/data-registration')->with('success', 'Data Terhapus!!');
-    } catch (\Throwable $e){
-        Log::error($e->getMessage());
-        return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
-    }
-}
 
     public function detailpendaftaran($id_pendaftaran)
     {
@@ -504,8 +439,6 @@ public function hapuspendaftaran($id_pendaftaran){
         $data = Pendaftaran::where("id_pendaftaran",$id_pendaftaran)->first();
         $no=1;
         
-        
-        $datapembayaran = Pendaftaran::where("id_pendaftaran", $id_pendaftaran)->get();
         return view('pendaftaran.data-pendaftaran-detail', ['viewDataUser' => $dataUser,'viewData' => $data,'viewSekolah' => $dataSekolah,'viewjurusan' => $dataprod]);
     }
 
