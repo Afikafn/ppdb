@@ -12,17 +12,17 @@ class JurusanController extends Controller
     //
     public function __construct()
     {
-        $this->middleware(function($request,$next){
-            if (session('success')) {
-                Session::success(session('success'));
+        $this->middleware(function($request, $next) {
+            if ($request->session()->has('success')) {
+                $request->session()->flash('success', $request->session()->get('success'));
             }
 
-            if (session('error')) {
-                Session::error(session('error'));
+            if ($request->session()->has('error')) {
+                $request->session()->flash('error', $request->session()->get('error'));
             }
-            
-            if (session('warning')) {
-                Session::warning(session('warning'));
+
+            if ($request->session()->has('warning')) {
+                $request->session()->flash('warning', $request->session()->get('warning'));
             }
             return $next($request);
         });
@@ -77,7 +77,6 @@ class JurusanController extends Controller
             }
             Jurusan::where("id", $id_jurusan)->update([
                 'nama_jurusan' => $a->nama,
-                'jenjang_jurusan' => $a->jenjang,
                 'foto_jurusan' => $path,
         ]);
             return redirect('/data-jurusan')->with('success', 'Data Terubah!!');

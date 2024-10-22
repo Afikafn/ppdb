@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -437,7 +436,7 @@
         <div class="content-body">
             <!-- row -->
             <div class="container-fluid">
-                @section('content')@show
+                @yield('content')
             </div>
         </div>
         <!--**********************************
@@ -655,47 +654,47 @@
         }
     </script>
 
-<script>
-    $(document).on('click', '#btn-delete', function (e) {
-        e.preventDefault();
-        var link = $(this).attr('href');
+    <script>
+        $(document).on('click', '#btn-delete', function (e) {
+            e.preventDefault();
+            var link = $(this).attr('href');
 
-        Swal.fire({
-            title: 'Apakah Kamu Yakin Untuk Menghapus Data Tersebut?',
-            text: "Kamu tidak bisa mengembalikan data ini!",
-            icon: 'warning',
-            showCancelButton: true,
-            //confirmButtonColor: '#3085d6',
-            //cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus itu!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = link;
-            }
+            Swal.fire({
+                title: 'Apakah Kamu Yakin Untuk Menghapus Data Tersebut?',
+                text: "Kamu tidak bisa mengembalikan data ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                //confirmButtonColor: '#3085d6',
+                //cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus itu!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = link;
+                }
+            })
         })
-    })
 
-    $(document).on('click', '#btn-update', function (e) {
-        e.preventDefault();
-        var link = $(this).attr('method');
+        $(document).on('click', '#btn-update', function (e) {
+            e.preventDefault();
+            var link = $(this).attr('method');
 
-        Swal.fire({
-            title: 'Do you want to save the changes?',
-            icon: 'info',
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Save',
-            denyButtonText: `Don't save`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                window.location = link;
-            } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-            }
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                icon: 'info',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    window.location = link;
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info')
+                }
+            })
         })
-    })
-</script>
+    </script>
 
 </body>
 

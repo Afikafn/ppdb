@@ -176,8 +176,8 @@
                                                                 class="fa fa-pencil-alt"></i></a>
                                                         <a class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target=".delete{{ $x->id_pendaftaran }}"></i></a>
-                                                                <div class="modal fade delete{{ $x->id_pendaftaran }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                data-bs-target=".delete{{ $x->id }}"></i></a>
+                                                                <div class="modal fade delete{{ $x->id }}" tabindex="-1" role="dialog" aria-hidden="true">
                                                                     <div class="modal-dialog modal-sm">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
@@ -190,11 +190,11 @@
                                                                             <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-danger light"
                                                                                     data-bs-dismiss="modal">Batalkan</button>
-                                                                                <a
-                                                                                    href="/delete-registration/{id_pendaftaran}/{{ $x->id_pendaftaran }}">
-                                                                                    <button type="submit" class="btn btn-danger shadow">
-                                                                                        Ya, Hapus Data!
-                                                                                    </button></a>
+                                                                                    <form action="{{ route('delete-registration', $x->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <button type="submit" class="btn btn-danger">Ya, Hapus Data Ini</button>
+                                                                                    </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>

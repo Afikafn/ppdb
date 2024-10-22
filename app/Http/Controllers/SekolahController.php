@@ -52,7 +52,6 @@ class SekolahController extends Controller
         }
     }
     public function updatesekolah(Request $a, $npsn){
-        //$dataUser = Pengguna::all();
     try{
         Sekolah::where("npsn", "$npsn")->update([
             'nama_sekolah' => $a->nama,

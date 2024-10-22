@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'created_at' => now()
         ]);
         ProfileUser::create([
-            'user_id' => 1,
+            'user_id' => 13,
             'nama' => 'Iam Admin',
             'email' => 'admin@gmail.com',
             'created_at' => now()
@@ -40,29 +40,5 @@ class UserSeeder extends Seeder
             'tgl_update' => now(),
             'created_at' => now()
         ]);
-
-        User::create([
-            'name' => 'Iam User',
-            'password' => Hash::make('12345678'),
-            'email' => 'user@gmail.com',
-            'email_verified_at' => now(),
-            'role' => 'Calon Mahasiswa',
-            'created_at' => now()
-        ]);
-
-        ProfileUser::create([
-            'user_id' => 2,
-            'nama' => 'Iam User',
-            'email' => 'user@gmail.com',
-            'created_at' => now()
-        ]);
-        Timeline::create([
-            'user_id' => 2,
-            'status' => "Bergabung",
-            'pesan' => 'Membuat Akun baru',
-            'tgl_update' => now(),
-            'created_at' => now()
-        ]);
-
     }
 }

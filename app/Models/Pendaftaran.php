@@ -15,7 +15,6 @@ class Pendaftaran extends Model
     public $incrementing = false;
 
     protected $table = 'pendaftaran';
-    protected $primaryKey = "id";
     protected $fillable = [
         'id_pendaftaran',
         'user_id',

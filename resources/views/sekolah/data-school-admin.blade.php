@@ -190,15 +190,16 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="/update-school/ {{ $x->npsn }}" method="POST" enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
+                                                        @csrf
+                                                        @method('PUT')
                                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-xl-4">
-                                                                    <label for="iduser">npsn</label>
-                                                                    <input type="text" class="form-control" id="nama"
+                                                                    <label for="iduser">NPSN</label>
+                                                                    <input type="text" class="form-control" id="npsn"
                                                                         value="{{ $x->npsn }}"
-                                                                        placeholder="Enter ID npsn" name="id" readonly>
+                                                                        placeholder="Enter ID npsn" name="npsn">
                                                                 </div>
                                                                 <div class="col-xl-8">
                                                                     <label for="iduser">Nama Sekolah</label>

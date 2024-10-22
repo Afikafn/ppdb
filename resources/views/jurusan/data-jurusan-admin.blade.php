@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -12,7 +12,7 @@
 @endsection
 
 @section('menunya')
-    Program Studi
+    Jurusan
 @endsection
 
 @section('menu')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -41,7 +41,6 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('data-pengumuman')}}" aria-expanded="false">
@@ -73,14 +72,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Data Program Studi</h4>
+                    <h4 class="card-title">Data Jurusan</h4>
 
                     <!-- center modal -->
                     <div>
                         <button class="btn btn-info waves-effect waves-light mb-4" onclick="printDiv('cetak')"><i
                                 class="fa fa-print"> </i></button>
                         <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target=".modal"
-                            style="margin-bottom: 1rem;"><i class="mdi mdi-plus me-1"></i>Tambah Program Studi</button>
+                            style="margin-bottom: 1rem;"><i class="mdi mdi-plus me-1"></i>Tambah Jurusan</button>
                     </div>
 
                     <div class="modal fade modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
@@ -88,26 +87,21 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Tambah Program Studi</h5>
+                                    <h5 class="modal-title">Tambah Jurusan</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="save-prodi" method="POST" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
+                                    <form action="{{ route('save-jurusan') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                         <div class="form-group">
-                                            <label for="iduser">Nama Program Studi</label>
+                                            <label for="iduser">Nama Jurusan</label>
                                             <input type="text" class="form-control" id="nama"
-                                                placeholder="Masukkan Nama Prodi" name="nama" required>
+                                                placeholder="Masukkan Nama Jurusan" name="nama" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="iduser">Jenjang Program Studi</label>
-                                            <input type="text" class="form-control" id="jenjang"
-                                                placeholder="Masukkan Jenjang Prodi" name="jenjang" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="iduser">Foto Program Studi</label>
+                                            <label for="iduser">Foto Jurusan</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">Upload</span>
                                                 <div class="form-file">
@@ -128,15 +122,14 @@
                 </div>
                 <div class="card-body" id="cetak">
                     <div class="table-responsive">
-                        {{ csrf_field() }}
+                        @csrf
 
                         <table id="example3" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>ID</th>
-                                    <th>Nama Program Studi</th>
-                                    <th>Jenjang</th>
+                                    <th>Nama Jurusan</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                     
@@ -146,10 +139,9 @@
                                 @foreach ($viewData as $x)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $x->id_prodi }}</td>
-                                        <td>{{ $x->nama_prodi }}</td>
-                                        <td>{{ $x->jenjang_prodi }}</td>
-                                        <td><img src="{{ asset($x->foto_prodi) }}" width="200px" height="200" alt=""></td>
+                                        <td>{{ $x->id_jurusan }}</td>
+                                        <td>{{ $x->nama_jurusan }}</td>
+                                        <td><img src="{{ asset($x->foto_jurusan) }}" width="200px" height="200" alt=""></td>
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-primary shadow btn-xs sharp me-1" title="Edit"
@@ -170,15 +162,16 @@
                                                             </div>
                                                             <div class="modal-body text-center"><i
                                                                     class="fa fa-trash"></i><br> Apakah anda yakin ingin
-                                                                menghapus data ini?<br> {{ $x->nama_prodi }}
+                                                                menghapus data ini?<br> {{ $x->id }}
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger light"
                                                                     data-bs-dismiss="modal">Batalkan</button>
-                                                                <a href="delete-prodi/{{ $x->id }}">
-                                                                    <button type="submit" class="btn btn-danger shadow">
-                                                                        Ya, Hapus Data!
-                                                                    </button></a>
+                                                                    <form action="{{ route('delete-jurusan', $x->nama_jurusan) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-danger">Ya, Hapus Data Ini</button>
+                                                                    </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -193,43 +186,36 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Sunting Program Studi</h5>
+                                                    <h5 class="modal-title">Sunting Jurusan</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="update-prodi/{{ $x->id }}" method="POST"
+                                                    <form action="update-jurusan/{{ $x->id }}" method="POST"
                                                         enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
+                                                        @csrf
                                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                                         <div class="form-group">
                                                             <input type="hidden" name="id" id="nama" class="form-control"
                                                                 value="{{ $x->id }}">
                                                             <div class="row">
                                                                 <div class="col-xl-12">
-                                                                    <label for="iduser">Nama Program Studi</label>
+                                                                    <label for="iduser">Nama Jurusan</label>
                                                                     <input type="text" class="form-control" id="nama"
-                                                                        value="{{ $x->nama_prodi }}"
-                                                                        placeholder="Masukan Nama Prodi" name="nama"
+                                                                        value="{{ $x->nama_jurusan }}"
+                                                                        placeholder="Masukan Nama Jurusan" name="nama"
                                                                         required>
                                                                 </div>
                                                                 <div class="col-xl-12">
-                                                                    <label for="iduser">Jenjang Program Studi</label>
-                                                                    <input type="text" class="form-control" id="jenjang"
-                                                                        value="{{ $x->jenjang_prodi }}"
-                                                                        placeholder="Masukan Jenjang Prodi" name="jenjang"
-                                                                        required>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <label for="iduser">Foto Program Studi</label>
+                                                                    <label for="iduser">Foto Jurusan</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-text">Upload</span>
                                                                         <div class="form-file">
                                                                             <input type="file" class="form-file-input form-control" name="foto"
                                                                                 value="{{ old('foto') }}">
                                                                             <input type="hidden" name="pathnya" class="form-control-file"
-                                                                                value="{{ $x->foto_prodi }}">
+                                                                                value="{{ $x->foto_jurusan }}">
                                                                         </div>
                                                                     </div>
                                                                 </div>

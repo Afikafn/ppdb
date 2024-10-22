@@ -34,19 +34,18 @@ class UserController extends Controller
         });
     }
 
-    
-    //data user
+
     public function datauser(){
         $dataUser = User::all();
-        $kode = ProfileUser::id();
+        $kode = ProfileUser::all();
         return view ('user.data-user-admin',compact('dataUser','kode'));
     }
+    
     
 
     public function simpanuser(Request $a)
     {
         try {
-
             $password = Hash::make($a->input('password'));
 
             $checkuser = User::where('email', $a->email)->first();
@@ -106,7 +105,6 @@ class UserController extends Controller
             }
     }
 
-
     public function edituser($user_id)
     {
         $dataUser = ProfileUser::all();
@@ -114,22 +112,63 @@ class UserController extends Controller
         return view('user.data-user-detail',['viewDataUser' => $dataUser,'viewData'=>$dataUserbyId]);
     }
 
-
     
-    public function updateuser(Request $request, string $id)
-{
-    $profileuser = ProfileUser::find($id);
-    $profileuser->update([
-        'tempat_lahir' => $request->tempat,
-        'tanggal_lahir' => $request->tanggal,
-        'gender' => $request->jk,
-        'no_hp' => $request->hp,
-        'alamat' => $request->alamat,
-        'instagram' => $request->ig,
-    ]);
+    public function updateuser($id,Request $a)
+    {
+     try{
+        $dataUser = ProfileUser::all();
+            $message = [
+                'tempat.required' => 'Tempat lahir tidak boleh kosong',
+                'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
+                'jk.required' => 'Jenis Kelamin harus dipilih',
+                'hp.required' => 'Family card cannot be empty',
+                'alamat.required' => 'School name must be filled',
+                'ig.required' => 'Major must be filled',
+            ];
 
-    return redirect('/data-user')->with("success",'Data Berhasil Diupdate');
-}
+            $cekValidasi = $a->validate([
+                'tempat' => 'required',
+                'tanggal' => 'required',
+                'jk' => 'required',
+                'hp' => 'required',
+                'alamat' => 'required',
+                'ig' => 'required'
+            ], $message);
+
+            $file = $a->file('foto');
+            if(file_exists($file)){
+                $nama_file = time() . "-" . $file->getClientOriginalName();
+                $namaFolder = 'foto profil';
+                $file->move($namaFolder,$nama_file);
+                $pathFoto = $namaFolder."/".$nama_file;
+            } else {
+                $pathFoto = $a->pathFoto;
+            }
+
+            ProfileUser::where("id", $id)->update([
+                'nama' => $a->nama,
+                'email' => $a->email,
+                'foto' => $pathFoto,
+                'tempat_lahir' => $a->tempat,
+                'tanggal_lahir' => $a->tanggal,
+                'gender' => $a->jk,
+                'no_hp' => $a->hp,
+                'alamat' => $a->alamat,
+                'instagram' => $a->ig
+            ]);
+            Timeline::create([
+                'user_id' => $id,
+                'status' => "Mengedit User",
+                'pesan' => 'Membuat Akun baru',
+                'tgl_update' => now(),
+                'created_at' => now()
+            ]);
+            return redirect('/data-user')->with("success",'Data Berhasil Diubah');
+        }catch (\Exception $e){
+            echo $e;
+            //return redirect()->back()->with('error', 'Data Tidak Berhasil Diubah!');
+        }
+    }
 
     public function hapususer($user_id){
         //$dataUser = ProfileUser::all();
@@ -144,6 +183,7 @@ class UserController extends Controller
         return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
     }
     }
+
 
     
     public function insertRegis(Request $a){

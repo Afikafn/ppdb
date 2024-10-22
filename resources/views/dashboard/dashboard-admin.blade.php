@@ -53,7 +53,13 @@
                                         @endforeach
                                         @php
                                             $hsl = $aa + $bb;
-                                            $hslpersenanbaru = ($hsl * 100) / $jmlpendaftar;
+
+                                            // Check if $jmlpendaftar is not zero before division
+                                            if ($jmlpendaftar != 0) {
+                                                $hslpersenanbaru = ($hsl * 100) / $jmlpendaftar;
+                                            } else {
+                                                $hslpersenanbaru = 0; // or some other default value
+                                            }
                                         @endphp
 
                                         <div id="redial"></div>
@@ -132,7 +138,13 @@
                                             @endforeach
                                             @php
                                                 $hasil = $a + $b;
-                                                $hasilpersenan = ($hasil * 100) / $jmlpendaftar;
+
+                                                // Check if $jmlpendaftar is not zero before division
+                                                if ($jmlpendaftar != 0) {
+                                                    $hasilpersenan = ($hasil * 100) / $jmlpendaftar;
+                                                } else {
+                                                    $hasilpersenan = 0; // or some other default value
+                                                }
                                             @endphp
                                             <div class="progress-bar bg-gradient1 progress-animated"
                                                 style="width: {{ $hasilpersenan }}%; height:10px;"

@@ -10,7 +10,7 @@ class Pengumuman extends Model
 {
     use HasFactory;
     protected $table = "pengumuman";
-    protected $fillable = ["id_pengumuman","user_id","id_pendaftaran","hasil_seleksi","jurusan_penerima","nilai_interview","nilai_test","status"];
+    protected $fillable = ["id_pengumuman","user_id","id_pendaftaran","hasil_seleksi","jurusan_penerima","status"];
     public $timestamps = false;
     public $incrementing = false;
     protected $primaryKey= "id";
@@ -60,4 +60,13 @@ class Pengumuman extends Model
     {
          return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function pilihan1() {
+        return $this->belongsTo(Jurusan::class, 'pil1'); // Assuming 'pil1' is the foreign key
+    }
+    
+    public function pilihan2() {
+        return $this->belongsTo(Jurusan::class, 'pil2'); // Assuming 'pil2' is the foreign key
+    }
 }
+

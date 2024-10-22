@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -41,7 +41,6 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
                     </ul>
                 </li>
                 <li class="mm-active"><a href="{{route('data-pengumuman')}}" aria-expanded="false">
@@ -72,18 +71,18 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div class="mb-3">
-                            <h4 class="fs-24 font-w700">Pengumuman <br>Pendaftaran Mahasiswa Baru</h4>
+                            <h4 class="fs-24 font-w700">Pengumuman <br>Pendaftaran Peserta Didik Baru</h4>
                             <span>didaftarkan oleh <strong>{{ auth()->user()->name }}</strong> pada
                                 {{ $viewIdPendaftaran->tgl_pendaftaran }}</span>
                         </div>
                         <div class="mb-3">
                             <div class="d-flex align-items-center mb-4 pb-3 justify-content-end flex-wrap">
                                 <div class="me-3">
-                                    <h4 class="fs-18 font-w600">PMB PEI</h4>
-                                    <span>Kembangkuning, Ubrug, Jatiluhur <br>Purwakarta 41152 Indonesia</span>
+                                    <h4 class="fs-18 font-w600">PPDB SMAKDA</h4>
+                                    <span>Mrebet, Dusun 1, Selaganggeng <br>Purbalingga, Jawa Tengah 53352 </span>
                                 </div>
                                 <div class="me-3">
-                                    <img src="{{ asset('sipenmaru/images/logo.png') }}" alt="" width="50px">
+                                    <img src="{{ asset('sipenmaru/images/logosmakda.png') }}" alt="" width="50px">
                                 </div>
                                 <!--
                                         <div>
@@ -121,19 +120,20 @@
                                         <td scope="row" width="70%">
                                             <table>
                                                 <tr border="5">
-                                                    <th scope="row" width="50%">No Pendafataran</th>
-                                                    <td  width="50%">{{ $viewIdPendaftaran->id_pendaftaran }}</td>
-                                                <tr>
+                                                    <th scope="row" width="50%">No Pendafataran :</th>
+                                                    <td width="50%">{{ $viewIdPendaftaran->id_pendaftaran }}</td>
+                                                </tr>
+                                                    
                                                 <tr border="5">
-                                                    <th scope="row"  width="50%">NISN Siswa</th>
+                                                    <th scope="row"  width="50%">NISN Siswa :</th>
                                                     <td width="50%">{{ $viewIdPendaftaran->nisn }}</td>
                                                 </tr>
                                                 <tr border="5">
-                                                    <th scope="row"  width="50%">Nama Siswa</th>
+                                                    <th scope="row"  width="50%">Nama Siswa :</th>
                                                     <td  width="50%">{{ $viewIdPendaftaran->nama_siswa }}</td>
                                                 </tr>
                                                 <tr border="5">
-                                                    <th scope="row"  width="50%">Asal Sekolah</th>
+                                                    <th scope="row"  width="50%">Asal Sekolah :</th>
                                                     <td width="50%">
                                                         {{-- {{$viewIdPendaftaran->skolah->nama_sekolah}} --}}
                                                         @foreach ($viewSekolah as $item)
@@ -165,7 +165,7 @@
                                                         <div class="alert alert-outline-success alert-dismissible fade show" style="border-radius: 0%; margin-top:-1rem">
                                                             <table>
                                                                 <tr>
-                                                                    <th scope="row">Program Studi Penerima <b>{{$x->prodi->nama_prodi}}</b></th>
+                                                                    <th scope="row">Jurusan Penerima <b>{{$x->prodi->nama_jurusan}}</b></th>
                                                                 </tr>
                                                             </table>
                                                         </div>

@@ -119,7 +119,7 @@ class PendaftaranController extends Controller
 
             //pendaftaran
             'gelombang' => $a->gelombang,
-            'tahun_masuk' => '2022',
+            'tahun_masuk' => '2025',
             'pil1' => $a->pil1,
             'pil2' => $a->pil2,
             
@@ -412,11 +412,11 @@ class PendaftaranController extends Controller
 
         // PendaftaranController.php
 
-        public function hapuspendaftaran($id_pendaftaran)
+        public function hapuspendaftaran($id)
         {
             //$dataUser = ProfileUsers::all();
             try{
-                $data = Pendaftaran::find($id_pendaftaran);
+                $data = Pendaftaran::find($id);
                 File::delete($data->pas_foto);
                 File::delete($data->berkas_ortu);
                 File::delete($data->berkas_siswa);

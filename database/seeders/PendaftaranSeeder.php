@@ -18,18 +18,18 @@ class PendaftaranSeeder extends Seeder
 
         DB::table('pendaftaran')->insert([
             'id_pendaftaran' => 'PENDPSB00001',
-            'user_id' =>2,
+            'user_id' =>3,
             'nisn' => '92348927348',
             'nik' => '72619873972094293',
-            'nama_siswa' => 'Inayah Fauziah',
+            'nama_siswa' => 'Elgiva',
             'jenis_kelamin' => 'Perempuan',
             'pas_foto' => 'file/1654938462-c-1.jpg',
-            'tempat_lahir' => 'Purwakarta',
+            'tempat_lahir' => '-',
             'tanggal_lahir' => now(),
             'agama' => 'Islam',
                     
             //kontak
-            'email'  => 'emailinay@gmail.com',
+            'email'  => 'givalev@gmail.com',
             'hp'  => '238742342340',
 
             //alamat
@@ -38,7 +38,7 @@ class PendaftaranSeeder extends Seeder
             
             //data pendaftaran
             'gelombang'  => 1,
-            'tahun_masuk'  => '2023',
+            'tahun_masuk'  => '2025',
             'pil1'  => 1,
             'pil2'  => 2,
 

@@ -202,7 +202,7 @@ Pendaftaran
                                             <div class="input-group">
                                                 <span class="input-group-text">Upload</span>
                                                 <div class="form-file">
-                                                    <input type="file" class="form-file-input form-control" name="foto">
+                                                    <input type="file" class="form-file-input form-control" name="foto" value="{{ old('foto') }}">
                                                     <input type="hidden" name="pathFoto" class="form-control-file" value="{{ $viewData->foto }}">
                                                 </div>
                                             </div>

@@ -324,7 +324,7 @@
                                     </div>
                                     <div class="flex-grow-1 overflow-hidden">
                                         <h5 class="font-size-16 mb-1">Data Pendaftaran</h5>
-                                        <p class="text-muted text-truncate mb-0">Pilihan program studi </p>
+                                        <p class="text-muted text-truncate mb-0">Pilihan Jurusan </p>
                                     </div>
                                     <div class="flex-shrink-0"> <i
                                             class="mdi mdi-chevron-up accor-down-icon font-size-24"></i> </div>

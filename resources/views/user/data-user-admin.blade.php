@@ -87,24 +87,24 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/save-user" method="POST" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
+                                        @csrf
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-xl-12">
-                                                    <label for="iduser">Nama</label>
-                                                    <input type="text" class="form-control" id="nama"
-                                                        placeholder="Masukkan Nama" name="nama" required>
+                                                    <label for="idusers">Nama</label>
+                                                    <input type="text" class="form-control" id="name"
+                                                        placeholder="Masukkan Nama" name="name" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="iduser">Email</label>
-                                            <input type="email" class="form-control" id="nama"
+                                            <input type="email" class="form-control" id="email"
                                                 placeholder="Masukkan Email" name="email" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="iduser">Kata Sandi</label>
-                                            <input type="password" class="form-control" id="nama"
+                                            <input type="password" class="form-control" id="password"
                                                 placeholder="Masukkan Kata Sandi" name="password" required>
                                         </div>
                                         <div class="form-group">
@@ -174,34 +174,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($dataUser as $x)
+                               
+                                @foreach ($kode as $x)
                                     <tr>
-                                        
-                                        <td>
-                                            @if ($x->profile && $x->profile->foto != null)
-                                                <img class=" rounded-circle img-thumbnail" src="{{ url('/' . $x->profile->foto) }}" alt="" width="45px" />
-                                            @else
-                                                <img class="rounded-circle img-thumbnail" src="{{ asset('sipenmaru/images/ava.png') }}" alt="" width="45px" />
-                                            @endif
-                                        </td>
-                                        
-                                        <td>{{ optional($x->profile)->nama }}</td>
-                                        <td>
-                                            @if($x->profile && $x->profile->gender == 'Perempuan')
-                                                <span class="badge badge-secondary">Perempuan</span>
-                                            @elseif($x->profile && $x->profile->gender == 'Laki-laki')
-                                                <span class="badge" style="background-color: rgb(81, 171, 255)">Laki-Laki</span>
-                                            @else
-                                                <span class="badge badge-warning">?</span>
-                                            @endif
-                                        </td>
-                                        
-                                        <td><strong>{{ $x->no_hp }}</strong></td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $x->nama }}</td>
+                                        <td>{{ $x->gender }}</td>
+                                        <td>{{ $x->no_hp }}</td>
                                         <td>{{ $x->email }}</td>
+
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-light shadow btn-xs sharp me-1" title="Data Registration"
-                                                    href="data-user/edit/{{ $x->id }}"><i class="fa fa-file-alt"></i></a>
+                                                    href="{{route('edit-user',$x->id)}}"><i class="fa fa-file-alt"></i></a>
                                                 <a class="btn btn-primary shadow btn-xs sharp me-1" title="Edit"
                                                     href="{{route('edit-user',$x->id)}}"><i
                                                         class="fa fa-pencil-alt"></i></a>
@@ -225,10 +210,11 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger light"
                                                                         data-bs-dismiss="modal">Batalkan</button>
-                                                                    <a href="{{route('delete-user',$x->id)}}">
-                                                                        <button type="submit" class="btn btn-danger shadow">
-                                                                            Ya, Hapus Data!
-                                                                        </button></a>
+                                                                        <form action="{{ route('delete-user', $x->id) }}" method="POST">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="btn btn-danger">Ya, Hapus Data Ini</button>
+                                                                        </form>
                                                                 </div>
                                                             </div>
                                                         </div>

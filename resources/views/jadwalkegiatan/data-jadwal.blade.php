@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA 
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-user')}}">Pengguna</a></li>
                         <li><a href="{{route('data-sekolah')}}">Sekolah</a></li>
-                        <li><a href="{{route('data-prodi')}}">Program Studi</a></li>
+                        <li><a href="{{route('data-jurusan')}}">Jurusan</a></li>
                         <li><a href="{{route('data-jadwal')}}">Jadwal Kegiatan</a></li>
                     </ul>
                 </li>
@@ -41,7 +41,6 @@
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{route('data-registration')}}">Pendaftaran</a></li>
-                        <li><a href="{{route('data-pembayaran')}}">Pembayaran</a></li>
                     </ul>
                 </li>
                 
@@ -103,7 +102,6 @@
                                             value="{{ old('jenis') }}">
                                         <datalist id="datalistOptionsJenis">
                                             <option value="Pendaftaran">Pendaftaran</option>
-                                            <option value="Tes Potensi akademik dan Wawancara">Tes Potensi akademik dan Wawancara</option>
                                             <option value="Pengumuman">Pengumuman</option>
                                             <option value="Registrasi Ulang">Registrasi Ulang</option>
                                         </datalist>
@@ -199,10 +197,11 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-danger light"
                                                                     data-bs-dismiss="modal">Batalkan</button>
-                                                                <a href="delete-jadwal/{{ $x->id }}">
-                                                                    <button type="submit" class="btn btn-danger shadow">
-                                                                        Ya, Hapus Data!
-                                                                    </button></a>
+                                                                <form action="delete-jadwal/{{ $x->id }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger">Ya, Hapus Data Ini</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -225,7 +224,8 @@
                                                 <div class="modal-body">
                                                     <form action="update-jadwal/{{ $x->id }}" method="POST"
                                                         enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
+                                                        @csrf
+                                                        @method('PUT')
                                                         <input type="hidden" name="userid" value="{{ auth()->user()->id}}">
                                                         <input type="hidden" name="id" value="{{ $x->id }}">
                                                         

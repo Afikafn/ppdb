@@ -17,15 +17,18 @@ class PengumumanController extends Controller
     //
     public function __construct()
     {
-        $this->middleware(function($request,$next){
-            if (session('success')) {
-                Session::success(session('success'));
+        $this->middleware(function($request, $next) {
+            if ($request->session()->has('success')) {
+                $request->session()->flash('success', $request->session()->get('success'));
             }
 
-            if (session('error')) {
-                Session::error(session('error'));
+            if ($request->session()->has('error')) {
+                $request->session()->flash('error', $request->session()->get('error'));
             }
 
+            if ($request->session()->has('warning')) {
+                $request->session()->flash('warning', $request->session()->get('warning'));
+            }
             return $next($request);
         });
     }
@@ -36,8 +39,8 @@ class PengumumanController extends Controller
         $dataUser = ProfileUser::all();
         $data = Pengumuman::all();
         $dataid = Pendaftaran::all();
-        $dataprod = Jurusan::all();
-        return view ('pengumuman.data-pengumuman-admin',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewjurusan' => $dataprod]);
+        $datajurusan = Jurusan::all();
+        return view ('pengumuman.data-pengumuman-admin',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewjurusan' => $datajurusan]);
     }
 
     public function lihatpengumuman(Request $a)
@@ -109,15 +112,19 @@ class PengumumanController extends Controller
             return redirect()->back()->with('error', 'Data Tidak Berhasil Diubah!');
         }
     }
-    
 
-    public function hapuspengumuman($id_pengumuman){
-        //$dataUser = ProfileUser::all();
-        try{
+    public function hapuspengumuman($id_pengumuman) {
+        try {
             $data = Pengumuman::find($id_pengumuman);
-            $data->delete();
-            return redirect('/data-announcement')->with('success', 'Data Terhapus!!');
-        } catch (\Exception $e){
+            
+            // Check if the data exists
+            if ($data) {
+                $data->delete();
+                return redirect('/data-announcement')->with('success', 'Data Terhapus!!');
+            } else {
+                return redirect()->back()->with('error', 'Data Tidak Ditemukan!');
+            }
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data Tidak Berhasil Dihapus!');
         }
     }

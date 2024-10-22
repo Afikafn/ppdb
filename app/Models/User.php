@@ -16,6 +16,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $primaryKey= "id";
     protected $fillable = [
         'name',
         'email',
@@ -44,5 +45,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function socialAccounts()
+    {
+    return $this->hasMany(SocialAccount::class);
+    }
+    public function profile()
+    {
+        return $this->hasOne(ProfileUser::class);
+    }
+
+    public function timeline(){
+        return $this->hasMany(Timeline::class);
     }
 }

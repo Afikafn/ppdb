@@ -22,8 +22,6 @@ return new class extends Migration
                 ->references('id')
                 ->on('jurusan')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('nilai_interview')->nullable();
-            $table->integer('nilai_test')->nullable();
             $table->boolean('status');
             $table->timestamps();
         });

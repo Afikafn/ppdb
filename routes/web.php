@@ -48,21 +48,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-user', [UserController::class, 'datauser'])->name('data-user');
     Route::post('/save-user', [UserController::class, 'simpanuser']);
     Route::get('/edit-user/{user_id}', [UserController::class, 'edituser'])->name('edit-user');
-    Route::get('/data-user/edit/{user_id}', [UserController::class, 'edituser'])->name('edit-user');
-    Route::post('/update-user/{user_id}', [UserController::class, 'updateuser'])->name('update-user');
-    Route::get('/delete-user/{user_id}', [UserController::class, 'hapususer'])->name('delete-user');
+    Route::put('/update-user/{user_id}', [UserController::class, 'updateuser'])->name('update-user');
+    Route::delete('/delete-user/{user_id}', [UserController::class, 'hapususer'])->name('delete-user');
 
     //sekolah
     Route::get('/data-sekolah', [SekolahController::class, 'datasekolah'])->name('data-sekolah');
     Route::post('/save-school', [SekolahController::class, 'simpansekolah']);
-    Route::post('/update-school/{NPSN}', [SekolahController::class, 'updatesekolah']);
-    Route::get('/delete-school/{NPSN}', [SekolahController::class, 'hapussekolah']);
+    Route::put('/update-school/{npsn}', [SekolahController::class, 'updatesekolah']);
+    Route::delete('/delete-school/{npsn}', [SekolahController::class, 'hapussekolah']);
 
     //jurusan
     Route::get('/data-jurusan', [JurusanController::class, 'datajurusan'])->name('data-jurusan');
-    Route::post('/save-jurusan', [JurusanController::class, 'simpanjurusan']);
-    Route::put('/update-jurusan/{id_jurusan}', [JurusanController::class, 'updatejurusan']);
-    Route::delete('/delete-jurusan/{id_jurusan}', [JurusanController::class, 'hapusjurusan']);
+    Route::post('/save-jurusan', [JurusanController::class, 'simpanjurusan'])->name('save-jurusan');
+    Route::post('/update-jurusan/{id_jurusan}', [JurusanController::class, 'updatejurusan']);
+    Route::delete('/delete-jurusan/{id_jurusan}', [JurusanController::class, 'hapusjurusan'])->name('delete-jurusan');
 
     //jadwal
     Route::get('/data-jadwal', [JadwalKegiatanController::class, 'datajadwal'])->name('data-jadwal');
@@ -76,8 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/save-registration', [PendaftaranController::class, 'simpanpendaftaran']);
     Route::get('/edit-registration/{id_pendaftaran}', [PendaftaranController::class, 'editpendaftaran']);
     Route::post('/update-registration/{id_pendaftaran}', [PendaftaranController::class, 'updatependaftaran']);
-    Route::get('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran']);
-    //Route::delete('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran'])->name('delete-registration');
+    //Route::get('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran']);
+    Route::delete('/delete-registration/{id_pendaftaran}', [PendaftaranController::class, 'hapuspendaftaran'])->name('delete-registration');
     Route::get('/detail-registration/{id_pendaftaran}', [PendaftaranController::class, 'detailpendaftaran']);
     Route::get('/card-registration/{id_pendaftaran}', [PendaftaranController::class, 'kartupendaftaran']);
 
