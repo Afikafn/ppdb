@@ -12,24 +12,23 @@ use App\Models\Timeline;
 use File;
 use Alert;
 use App\Models\ProfileUser;
-use Illuminate\Support\Facades\Session;
 
 class LogAkunController extends Controller
 {
     //
     public function __construct()
     {
-        $this->middleware(function($request,$next){
-            if (session('success')) {
-                Session::success(session('success'));
+        $this->middleware(function($request, $next) {
+            if ($request->session()->has('success')) {
+                $request->session()->flash('success', $request->session()->get('success'));
             }
 
-            if (session('error')) {
-                Session::error(session('error'));
+            if ($request->session()->has('error')) {
+                $request->session()->flash('error', $request->session()->get('error'));
             }
-            
-            if (session('warning')) {
-                Session::warning(session('warning'));
+
+            if ($request->session()->has('warning')) {
+                $request->session()->flash('warning', $request->session()->get('warning'));
             }
             return $next($request);
         });
@@ -44,21 +43,15 @@ class LogAkunController extends Controller
     public function editprofil(Request $a){
             $message = [
                 'nama.required' => 'Nama tidak boleh kosong',
-                'tempat.required' => 'Tempat lahir tidak boleh kosong',
-                'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
-                'jk.required' => 'Jenis Kelamin harus dipilih',
-                'hp.required' => 'Family card cannot be empty',
-                'alamat.required' => 'School name must be filled',
+                'email.required' => 'Email tidak boleh kosong',
             ];
 
             $cekValidasi = $a->validate([
                 'nama' => 'required',
-                'tempat' => 'required',
-                'tanggal' => 'required',
-                'jk' => 'required',
-                'hp' => 'required',
-                'alamat' => 'required',
+                'email' => 'required',
             ], $message);
+
+
 
             $file = $a->file('foto');
             if(file_exists($file)){
@@ -72,6 +65,7 @@ class LogAkunController extends Controller
 
             ProfileUser::where("user_id", Auth::user()->id)->update([
                 'nama' => $a->nama,
+                'email' => $a->email,
                 'foto' => $pathFoto,
                 'tempat_lahir' => $a->tempat,
                 'tanggal_lahir' => $a->tanggal,
@@ -91,6 +85,7 @@ class LogAkunController extends Controller
                 'created_at' => now()
             ]);
             return redirect('/profile')->with('success', 'Profil Akun Terubah!');
+            
 
     }
 

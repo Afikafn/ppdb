@@ -10,7 +10,7 @@ class ProfileUser extends Model
 {
     use HasFactory;
     protected $table = "profile_user";
-    protected $fillable = ["user_id","nama","email","foto","tempat_lahir","tanggal_lahir","gender","no_hp","alamat","instagram","whatsapp"];
+    protected $fillable = ["user_id","nama","email","foto","tempat_lahir","tanggal_lahir","gender","no_hp","alamat","instagram"];
     public $timestamps = false;
     public $incrementing = false;
     protected $primaryKey= "id";

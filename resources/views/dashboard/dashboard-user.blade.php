@@ -91,7 +91,7 @@
 </div>
 <div class="row">
     @foreach ($jurusan as $x)
-        <div class="col-xl-3 col-lg-6 col-sm-6" style="padding: 0px">
+        <div class="col-xl-4 col-lg-6 col-sm-6" style="padding: 0px">
             <div class="card" style="border-radius: 0%;">
                     <div class="new-arrival-product">
                         <div class="new-arrivals-img-contnent">

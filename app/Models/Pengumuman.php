@@ -52,10 +52,11 @@ class Pengumuman extends Model
     {
         return $this->belongsTo(Pendaftaran::class, 'id_pendaftaran');
  	}
-     public function prodi()
+     public function jurusan()
      {
          return $this->belongsTo(Jurusan::class, 'jurusan_penerima');
       }
+
     public function user()
     {
          return $this->belongsTo(User::class, 'user_id');

@@ -1,7 +1,7 @@
 @extends('master.master-admin')
 
 @section('title')
-    PMB PEI
+    PPDB SMAKDA 
 @endsection
 
 @section('header')
@@ -32,7 +32,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{ route('data-user') }}">Pengguna</a></li>
                             <li><a href="{{ route('data-sekolah') }}">Sekolah</a></li>
-                            <li><a href="{{ route('data-prodi') }}">Program Studi</a></li>
+                            <li><a href="{{ route('data-jurusan') }}">Jurusan</a></li>
                             <li><a href="{{ route('data-jadwal') }}">Jadwal Kegiatan</a></li>
                         </ul>
                     </li>
@@ -42,7 +42,6 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{ route('data-registration') }}">Pendaftaran</a></li>
-                            <li><a href="{{ route('data-pembayaran') }}">Pembayaran</a></li>
                         </ul>
                     </li>
 
@@ -95,10 +94,6 @@
                         <h5 class="mt-3 mb-1">
                             {{ auth()->user()?->profile?->nama ?? '' }}
                         </h5>
-                        <div class="mt-4">
-                            <button type="button" class="btn btn-primary btn-sm"><i class="uil uil-envelope-alt me-2"></i>
-                                Kirim Pesan</button>
-                        </div>
                     </div>
                     <hr class="my-4">
                     <div class="text-muted">
@@ -239,13 +234,9 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-sm-3 col-5">
-                                                <h2>
-                                                    <a
-                                                        href="https://www.instagram.com/{{ auth()->user()->profile->instagram ?? '' }}/">
-                                                        <i class="fab fa-instagram" style="width: 50px"></i>
-                                                    </a>
-
-                                                </h2>
+                                                <h5 class="f-w-500"><i class="fab fa-instagram"></i>
+                                                    {{ auth()->user()?->profile?->instagram ?? '' }}
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -255,15 +246,13 @@
                                         <div class="settings-form">
                                             <br>
                                             <h4 class="text-primary">Pengaturan Profil</h4>
-                                            <form action="edit-profile" method="POST" enctype="multipart/form-data">
+                                            <form action="{{route('edit-profile')}}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="userid" value="{{ auth()->user()->id }}">
                                                 <div class="row">
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Nama</label>
-                                                        <input type="text"
-                                                            value="{{ auth()->user()?->profile?->nama ?? '' }}"
-                                                            class="form-control" name="nama">
+                                                        <input type="text" value="{{ auth()->user()?->profile?->nama ?? '' }}" class="form-control" name="nama">
                                                         @error('nama')
                                                             <div class="alert alert-warning" role="alert">
                                                                 <strong>Warning!</strong>
@@ -274,14 +263,11 @@
                                                     </div>
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Email</label>
-                                                        <input type="email"
-                                                            value="{{ auth()->user()?->profile?->email ?? '' }}"
-                                                            class="form-control" name="email">
+                                                        <input type="email" value="{{ auth()->user()?->profile?->email ?? '' }}" class="form-control" name="email">
                                                         <!-- readonly -> hanya bisa dibaca -->
                                                     </div>
                                                 </div>
-                                                <input type="hidden" name="id" class="form-control-file"
-                                                    value="{{ auth()->user()?->profile?->user_id ?? '' }}">
+                                                <input type="hidden" name="id" class="form-control-file" value="{{ auth()->user()?->profile?->user_id ?? '' }}">
                                                 <div class="row">
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Jenis Kelamin</label>
@@ -323,17 +309,11 @@
                                                                     name="foto">
                                                             </div>
                                                         </div>
-                                                        <input type="hidden" name="pathFoto" class="form-control-file"
-                                                            value="{{ auth()->user()?->profile?->foto ?? '' }}">
-                                                        <img class="avatar-lg rounded-circle img-thumbnail"
-                                                            src="{{ url('/' . (auth()->user()?->profile?->foto ?? 'default.jpg')) }}"
-                                                            width="75px" height="auto" alt="">
-                                                        @error('foto')
-                                                            <div class="alert alert-warning" role="alert">
-                                                                <strong>Warning!</strong>
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                                            <input type="hidden" name="pathFoto" class="form-control-file"
+                                                                value="{{ auth()->user()?->profile?->foto ?? '' }}">
+                                                            <img class="avatar-lg rounded-circle img-thumbnail"
+                                                                src="{{ url('/' . (auth()->user()?->profile?->foto ?? 'default.jpg')) }}"
+                                                                width="75px" height="auto" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -342,27 +322,14 @@
                                                         <input type="text"
                                                             value="{{ auth()->user()?->profile?->tempat_lahir ?? '' }}"
                                                             value="{{ old('tempat_lahir') }}" class="form-control"
-                                                            name="tempat_lahir">
-                                                        @error('tempat_lahir')
-                                                            <div class="alert alert-warning" role="alert">
-                                                                <strong>Warning!</strong>
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                                            name="tempat">
                                                     </div>
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Tanggal Lahir</label>
                                                         <input type="date"
                                                             value="{{ auth()->user()?->profile?->tanggal_lahir ?? '' }}"
                                                             value="{{ old('tanggal_lahir') }}" class="form-control"
-                                                            name="tanggal_lahir">
-                                                        @error('tanggal_lahir')
-                                                            <div class="alert alert-warning" role="alert">
-                                                                <strong>Warning!</strong>
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
-                                                    </div>
+                                                            name="tanggal">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Alamat</label>
@@ -375,13 +342,7 @@
                                                         <input type="text"
                                                             value="{{ auth()->user()?->profile?->no_hp ?? '' }}"
                                                             value="{{ old('no_hp') }}" class="form-control"
-                                                            name="no_hp">
-                                                        @error('no_hp')
-                                                            <div class="alert alert-warning" role="alert">
-                                                                <strong>Warning!</strong>
-                                                                {{ $message }}
-                                                            </div>
-                                                        @enderror
+                                                            name="hp">
                                                     </div>
                                                     <div class="mb-3 col-md-6">
                                                         <label class="form-label">Sosial Media
@@ -389,7 +350,7 @@
                                                         <input type="text"
                                                             value="{{ auth()->user()?->profile?->instagram ?? '' }}"
                                                             value="{{ old('instagram') }}" class="form-control"
-                                                            name="instagram">
+                                                            name="ig">
                                                     </div>
                                                 </div>
                                                 <button class="btn btn-primary" type="submit">Perbaharui Data</button>

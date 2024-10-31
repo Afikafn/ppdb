@@ -71,7 +71,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div class="mb-3">
-                            <h4 class="fs-24 font-w700">Pengumuman <br>Pendaftaran Peserta Didik Baru</h4>
+                            <h4 class="fs-24 font-w700">Pengumuman <br>Penerimaan Peserta Didik Baru</h4>
                             <span>didaftarkan oleh <strong>{{ auth()->user()->name }}</strong> pada
                                 {{ $viewIdPendaftaran->tgl_pendaftaran }}</span>
                         </div>
@@ -165,7 +165,7 @@
                                                         <div class="alert alert-outline-success alert-dismissible fade show" style="border-radius: 0%; margin-top:-1rem">
                                                             <table>
                                                                 <tr>
-                                                                    <th scope="row">Jurusan Penerima <b>{{$x->prodi->nama_jurusan}}</b></th>
+                                                                    <th scope="row">Jurusan Penerima <b>{{$x->jurusan->nama_jurusan}}</b></th>
                                                                 </tr>
                                                             </table>
                                                         </div>

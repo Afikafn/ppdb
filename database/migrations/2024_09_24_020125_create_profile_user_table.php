@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('alamat')->nullable();
             $table->string('instagram')->nullable();
-            $table->string('whatsapp')->nullable();
             $table->timestamps();
         });
     }

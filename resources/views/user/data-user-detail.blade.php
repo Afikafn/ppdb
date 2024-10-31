@@ -240,7 +240,6 @@
                                                     <label class="form-label">Nama</label>
                                                     <input type="text" value="{{ $viewData->nama ?? 'Default Name' }}"
                                                         class="form-control" name="nama">
-                                                    
                                                 </div>
                                                 <div class="mb-3 col-md-6">
                                                     <label class="form-label">Email</label>
@@ -274,7 +273,7 @@
                                                                     value="{{ old('jk') }}">
                                                                     <option value="{{ old('jk') }}" disabled selected>Pilih
                                                                         Jenis Kelamin </option>
-                                                                    <option value="Laki-laki">Laki-aki</option>
+                                                                    <option value="Laki-laki">Laki-laki</option>
                                                                     <option value="Perempuan">Perempuan</option>
                                                                 </select>
                                                             @endif  

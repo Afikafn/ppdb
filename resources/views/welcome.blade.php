@@ -8,9 +8,9 @@
     <meta name="author" content="">
     <meta name="robots" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="PMB PEI">
-    <meta property="og:title" content="PMB PEI">
-    <meta property="og:description" content="PMB PEI">
+    <meta name="description" content="PPDB SMAKDA">
+    <meta property="og:title" content="PPDB SMAKDA">
+    <meta property="og:description" content="PPDB SMAKDA">
 
     <!-- PAGE TITLE HERE -->
     <title>Masuk dan Daftar | PPDB SMAKDA</title>

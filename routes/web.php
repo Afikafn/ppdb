@@ -34,14 +34,16 @@ Route::post('regist', [UserController::class, 'insertRegis'])->name('regist');
  */
 Route::get('/auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'handleProvideCallback']);
+    
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');    
+Route::group(['middleware' => ['auth']], function () {
+// Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-
+                                                                                   
     //akun
     Route::get('/profile', [LogAkunController::class, 'dataprofil'])->name("profile");
-    Route::post('/edit-profile', [LogAkunController::class, 'editprofil']);
+    Route::post('/edit-profile', [LogAkunController::class, 'editprofil'])->name('edit-profile');
     Route::post('/edit-pw', [LogAkunController::class, 'editakun']);
 
     //user/pengguna
@@ -89,9 +91,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-announcement', [PengumumanController::class, 'datapengumuman'])->name('data-pengumuman');
     Route::get('/view-announcement/{id_pendaftaran}', [PengumumanController::class, 'lihatpengumuman']);
     //Route::get('/view-announcement', [PengumumanController::class, 'lihatpengumuman']);
-    Route::post('/save-announcement', [PengumumanController::class, 'simpanpengumuman']);
+    //Route::post('/save-announcement', [PengumumanController::class, 'simpanpengumuman'])->name('save-pengumuman');
     Route::put('/update-announcement/{id_pengumuman}', [PengumumanController::class, 'updatepengumuman']);
     Route::delete('/delete-announcement/{id_pengumuman}', [PengumumanController::class, 'hapuspengumuman']);
+
 });
 
 require __DIR__.'/auth.php';

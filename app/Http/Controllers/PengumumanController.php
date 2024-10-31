@@ -17,7 +17,7 @@ class PengumumanController extends Controller
     //
     public function __construct()
     {
-        $this->middleware(function($request, $next) {
+        $this->middleware(function ($request, $next) {
             if ($request->session()->has('success')) {
                 $request->session()->flash('success', $request->session()->get('success'));
             }
@@ -40,7 +40,7 @@ class PengumumanController extends Controller
         $data = Pengumuman::all();
         $dataid = Pendaftaran::all();
         $datajurusan = Jurusan::all();
-        return view ('pengumuman.data-pengumuman-admin',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewjurusan' => $datajurusan]);
+        return view('pengumuman.data-pengumuman-admin', ['viewDataUser' => $dataUser, 'viewData' => $data, 'viewIdPendaftaran' => $dataid, 'viewJurusan' => $datajurusan]);
     }
 
     public function lihatpengumuman(Request $a)
@@ -50,73 +50,70 @@ class PengumumanController extends Controller
         $data = Pengumuman::all();
         $dataid = Pendaftaran::where("id_pendaftaran", $a->id_pendaftaran)->first();
         $dataskl = Sekolah::all();
-        return view ('pengumuman.data-pengumuman-view',['viewDataUser' => $dataUser,'viewData' => $data,'viewIdPendaftaran' => $dataid,'viewID' => $dataditemukan,'viewSekolah' => $dataskl]);
+        return view('pengumuman.data-pengumuman-view', ['viewDataUser' => $dataUser, 'viewData' => $data, 'viewIdPendaftaran' => $dataid, 'viewID' => $dataditemukan, 'viewSekolah' => $dataskl]);
     }
 
 
-    public function simpanpengumuman(Request $a)
+    // public function simpanpengumuman(Request $a)
+    // {
+    //     try {
+    //         $dataUser = ProfileUser::all();
+    //         $kode = Pengumuman::id();
+    //         Pengumuman::create([
+    //             'id_pengumuman' => $kode,
+    //             'id_pendaftaran' => $a->id_pendaftaran,
+    //             'hasil_seleksi' => $a->hasil,
+    //             'jurusan_penerima' => $a->penerima,
+    //         ]);
+    //         Timeline::create([
+    //             'user_id' => Auth::user()->id,
+    //             'status' => "Pengumuman",
+    //             'pesan' => 'Membuat Pengumuman',
+    //             'tgl_update' => now(),
+    //             'created_at' => now()
+    //         ]);
+    //         return redirect('/data-announcement')->with('success', 'Data Tersimpan!!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Data Tidak Berhasil Disimpan!');
+    //     }
+    // }
+
+    public function updatepengumuman(Request $a, $id_pengumuman)
     {
-        try{
         //$dataUser = ProfileUser::all();
-            $kode = Pengumuman::id();
-            Pengumuman::create([
-                'id_pengumuman' => $kode,
-                'id_pendaftaran' => $a->id_pendaftaran,
-                'hasil_seleksi' => $a->hasil,
-                'jurusan_penerima' => $a->penerima,
-                'nilai_interview' => $a->interview,
-                'nilai_test' => $a->test
-            ]);
-            Timeline::create([
-                'user_id' => Auth::user()->id,
-                'status' => "Pengumuman",    
-                'pesan' => 'Membuat Pengumuman',
-                'tgl_update' => now(),
-                'created_at' => now()
-            ]);
-            return redirect('/data-announcement')->with('success', 'Data Tersimpan!!');
-        } catch (\Exception $e){
-            return redirect()->back()->with('error', 'Data Tidak Berhasil Disimpan!');
-        }
-    }
-
-    public function updatepengumuman(Request $a, $id_pengumuman){
-        //$dataUser = ProfileUser::all();
-        try{
+        try {
             $jurusan =  preg_replace("/[^0-9]/", "", $a->jurusan);
-            if($jurusan == 0)
-            {
+            if ($jurusan == 0) {
                 $jurusan = null;
             }
             Pengumuman::where("id_pengumuman", $id_pengumuman)->update([
                 'id_pendaftaran' => $a->id_pendaftaran,
                 'hasil_seleksi' => $a->hasil,
                 'jurusan_penerima' => $jurusan,
-                'nilai_interview' => $a->interview,
-                'nilai_test' => $a->test,
             ]);
-            if($a->hasil =="LULUS" || $a->hasil =="TIDAK LULUS"){
+            if ($a->hasil == "LULUS" || $a->hasil == "TIDAK LULUS") {
                 Pendaftaran::where("id_pendaftaran", "$a->id_pendaftaran")->update([
-                    "status_pendaftaran"=>"Selesai"
+                    "status_pendaftaran" => "Selesai"
                 ]);
             }
             Timeline::create([
                 'user_id' => Auth::user()->id,
-                'status' => "Pengumuman",    
+                'status' => "Pengumuman",
                 'pesan' => 'Memperbaharui Pengumuman',
                 'tgl_update' => now(),
                 'created_at' => now()
             ]);
             return redirect('/data-announcement')->with('success', 'Data Terubah!!');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data Tidak Berhasil Diubah!');
         }
     }
 
-    public function hapuspengumuman($id_pengumuman) {
+    public function hapuspengumuman($id_pengumuman)
+    {
         try {
             $data = Pengumuman::find($id_pengumuman);
-            
+
             // Check if the data exists
             if ($data) {
                 $data->delete();

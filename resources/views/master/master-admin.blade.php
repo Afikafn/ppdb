@@ -382,7 +382,7 @@
                         <div class="badge-bottom"><span class="badge badge-primary">@if (auth()->user()->role =="Administrator")
                             {{ auth()->user()->role }}
                         @else
-                            Camaba
+                            Calon PPDB
                         @endif
                             </span>
                         </div>

@@ -68,13 +68,13 @@
                     <div class="p-4">
                         <div class="d-flex">
                             <div class="col-lg-3" style="text-align: center; margin-right:25px; margin-left:25px;">
-                                <img width="110px" src="{{ asset('sipenmaru/images/logo.jpg') }}" alt="">
+                                <img width="180px" src="{{ asset('sipenmaru/images/logosmakda.png') }}" alt="">
                             </div>
                             <div class="col-lg-6">
                                 <center>
-                                    <label class="form-label" style="margin-top: -0.5rem"><strong class="d-block">KARTU
+                                    <label class="form-label" style="margin-top: 3rem"><strong class="d-block">KARTU
                                             PESERTA</strong></label>
-                                    <h5 style="margin-top: -0.5rem"> <strong class="d-block">PENDAFTARAN PESERTA DIDIK BARU</strong></h4>
+                                    <h5 style="margin-top: -0.5rem"> <strong class="d-block">PENERIMAAN PESERTA DIDIK BARU</strong></h4>
                                         <h4 style="margin-top: -0.5rem"><strong class="d-block">SMK NEGERI 2 PURBALINGGA</strong></h3>
                                             <p style="margin-top: -0.5rem"><strong class="d-block">Jl. Raya Selaganggeng, Kec. Mrebet Kab. Purbalingga, Jawa Tengah<br> 53352</strong></p>
                                 </center>
@@ -141,11 +141,10 @@
                                 <div class="col-lg-6" style="width:50%; text-align: right; margin:15px;">
                                     <img width="150px" src="{{ asset('sipenmaru/images/qr.png') }}" alt="">
                                 </div>
-                                <div class="col-lg-6" style="width:50%;">
+                                <div class="col-lg-6" style="width:50%">
                                     <br>
                                     <center>
-                                        <h5><label class="form-label"><strong
-                                                    class="d-block">...............................,2025</strong></label>
+                                        <h5><label class="form-label" strong class="d-block" style="text-align: right">...............................,2025</strong></label>
                                         </h5>
                                         <br>
                                         <p style="color: rgb(156, 156, 156)">ttd</p>
